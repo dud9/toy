@@ -5,6 +5,5 @@ import LoginForm from './components/LoginForm.vue'
 <template>
   <div w-screen h-screen flex justify-center items-center of-hidden>
     <LoginForm />
-    <Plum />
   </div>
 </template>

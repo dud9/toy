@@ -5,6 +5,7 @@ export const WHITE_LIST = [
   { name: 'NotFound', children: [] },
   { name: 'ErrorPage', children: [] },
   { name: 'Login', children: [] },
+  { name: 'Dashboard', children: [] },
   { name: 'Redirect', children: [] },
   { name: 'Profile', children: [] },
 ]
