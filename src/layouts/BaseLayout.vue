@@ -4,7 +4,7 @@ import TheMain from './components/TheMain.vue'
 import TheNav from './components/TheNav.vue'
 import TheRightPanel from './components/TheRightPanel.vue'
 
-const { showTheTags, fixHeader } = storeToRefs(useAppStore())
+const { fixHeader } = storeToRefs(useAppStore())
 const rightPanelVisible = ref(false)
 const backTopTarget = computed(() => {
   return fixHeader.value
@@ -23,9 +23,7 @@ const backTopTarget = computed(() => {
       bg-transparent
       :class="
         fixHeader
-          ? showTheTags
-            ? 'of-x-hidden of-y-auto !mt-84px'
-            : 'of-x-hidden of-y-auto !mt-50px'
+          ? 'of-x-hidden of-y-auto !mt-50px'
           : '' "
     >
       <TheMain w-full h-full p-5 />

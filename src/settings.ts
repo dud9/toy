@@ -1,32 +1,14 @@
 export const baseSettings = reactive<Record<string, any>>({
   /**
-   * the mode of theme - 'dark' | 'light' | 'system'
+   * the shape of menu
    */
-  themeMode: 'dark',
-  /**
-   * layout direction - 'vertical' | 'horizontal'
-   *
-   * @default: 'horizontal'
-   */
-  layout: 'horizontal',
+  menuShape: 'square',
   /**
    * whether show the logo
    *
    * @default: true
    */
   showTheLogo: true,
-  /**
-   * whether show the tags view
-   *
-   * @default: true
-   */
-  showTheTags: true,
-  /**
-   * whether cache the tags view
-   *
-   * @default: true
-   */
-  cacheTheTags: true,
   /**
    * whether show the header
    *
