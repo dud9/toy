@@ -7,13 +7,12 @@ const { menuCollapsed } = storeToRefs(appstore)
 const { toggleMenuCollapsed } = appstore
 const { width } = useWindowSize()
 let hiddenTitle = $ref(false)
-const { layout, showTheLogo } = storeToRefs(useAppStore())
+const { showTheLogo } = storeToRefs(useAppStore())
 watchEffect(() => {
   // when the screen width less than 1200px, hide the title
   hiddenTitle = width.value < 1200
   // reset the collapse
-  if (layout.value === 'horizontal')
-    toggleMenuCollapsed(false)
+  toggleMenuCollapsed(false)
 })
 </script>
 

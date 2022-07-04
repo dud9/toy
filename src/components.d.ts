@@ -7,8 +7,6 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AAvatar: typeof import('@arco-design/web-vue')['Avatar']
     ABackTop: typeof import('@arco-design/web-vue')['BackTop']
-    ABreadcrumb: typeof import('@arco-design/web-vue')['Breadcrumb']
-    ABreadcrumbItem: typeof import('@arco-design/web-vue')['BreadcrumbItem']
     AButton: typeof import('@arco-design/web-vue')['Button']
     ACheckbox: typeof import('@arco-design/web-vue')['Checkbox']
     ADoption: typeof import('@arco-design/web-vue')['Doption']
@@ -25,7 +23,6 @@ declare module '@vue/runtime-core' {
     AMenuItem: typeof import('@arco-design/web-vue')['MenuItem']
     ARadio: typeof import('@arco-design/web-vue')['Radio']
     ARadioGroup: typeof import('@arco-design/web-vue')['RadioGroup']
-    AResult: typeof import('@arco-design/web-vue')['Result']
     ASelect: typeof import('@arco-design/web-vue')['Select']
     ASpace: typeof import('@arco-design/web-vue')['Space']
     ASpin: typeof import('@arco-design/web-vue')['Spin']
