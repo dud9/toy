@@ -14,10 +14,10 @@ const equipName = '数控拼焊'
 <template>
   <div flex="~ col" h-auto mb-30px w="4/5" mx="1/10" pt-12 font-bold border="2 red">
     <div
-      h-100px min-h-50px w-full
+      h-auto min-h-50px w-full py-5 px-2
       border="5 [var(--color-primary-light-2)]"
       rounded-3 grid="~ flow-row-dense cols-3"
-      text="1.2rem" md="text-1.5rem"
+      text="1rem" sm="text-1.2rem" md="text-1.5rem"
       lg="text-1.8rem" xl="text-2.1rem"
     >
       <div
