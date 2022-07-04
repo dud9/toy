@@ -8,7 +8,7 @@ import NavLogo from '../widgets/NavLogo.vue'
 const { width } = useWindowSize()
 let shortLogo = $ref(false)
 watchEffect(() => {
-  shortLogo = width.value < 1200
+  shortLogo = width.value < 800
 })
 const navStyleSettingPanelVisible = ref(false)
 </script>

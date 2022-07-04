@@ -44,12 +44,6 @@ export const useAppStore = defineStore(
       buildStage()
     }
 
-    // the collapse state of menu
-    const {
-      bool: menuCollapsed,
-      setBool: toggleMenuCollapsed,
-    } = useBoolean()
-
     return {
       menuShape,
       showTheLogo,
@@ -57,11 +51,9 @@ export const useAppStore = defineStore(
       primaryColor,
       openAnimation,
       animationMode,
-      menuCollapsed,
       getStageVal,
       updateByStage,
       resetStage,
-      toggleMenuCollapsed,
     }
   },
   {

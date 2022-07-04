@@ -9,5 +9,7 @@ queryMenus()
 </script>
 
 <template>
-  <div />
+  <div flex="~ col" px="1/10" border="1 red" h-full pt-50px>
+    <div h-50px max-w="2/3" border="1 red" />
+  </div>
 </template>
