@@ -30,7 +30,7 @@ async function submit({
     roleId: 1,
   })
   useTimeoutFn(() => {
-    router.push('/foo')
+    router.push('/')
     setLoading(false)
   }, 1000)
 }

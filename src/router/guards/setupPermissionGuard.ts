@@ -14,32 +14,25 @@ export default function setupPermissionGuard(router: Router) {
     }
 
     const permissionStore = usePermissionStore()
-    // from login page
-    if (to.name === 'Foo') {
-      permissionStore.fetchAppMenus()
-      next('/')
-    }
-    else {
-      const menus = [...permissionStore.appMenus]
-      let exist = false
-      while (menus.length && !exist) {
-        const element = menus.shift()
-        if (element?.path === to.path)
-          exist = true
+    const menus = [...permissionStore.appMenus]
+    let exist = false
+    while (menus.length && !exist) {
+      const element = menus.shift()
+      if (element?.path === to.path)
+        exist = true
 
-        if (element?.children) {
-          menus.push(
-            ...(element.children as unknown as Menu[]),
-          )
-        }
+      if (element?.children) {
+        menus.push(
+          ...(element.children as unknown as Menu[]),
+        )
       }
-
-      if (exist)
-        next()
-
-      else
-        next(NOT_FOUND)
     }
+
+    if (exist)
+      next()
+
+    else
+      next(NOT_FOUND)
 
     useTimeoutFn(() => {
       NProgress.done()
