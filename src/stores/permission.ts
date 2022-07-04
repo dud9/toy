@@ -5,7 +5,7 @@ export const usePermissionStore = defineStore(
   'permissionStore',
   () => {
     const appMenus = ref<Menu[]>([])
-    function fetchAppMenus() {
+    async function fetchAppMenus() {
       appMenus.value = menus
     }
     function removeAppMenus() {

@@ -11,9 +11,9 @@ const animateName = computed(() => {
   <RouterView v-slot="{ Component, route }">
     <Transition :name="animateName" mode="out-in" appear>
       <KeepAlive v-if="route.meta?.cached">
-        <Component :is="Component" :key="route.fullPath" />
+        <component :is="Component" :key="route.fullPath" />
       </KeepAlive>
-      <Component :is="Component" v-else :key="route.fullPath" />
+      <component :is="Component" v-else :key="route.fullPath" />
     </Transition>
   </RouterView>
 </template>

@@ -9,10 +9,8 @@ export const useAppStore = defineStore(
     updateFromStorage(baseSettings)
 
     const {
-      layout,
+      menuShape,
       showTheLogo,
-      showTheTags,
-      cacheTheTags,
       fixHeader,
       primaryColor,
       openAnimation,
@@ -53,10 +51,8 @@ export const useAppStore = defineStore(
     } = useBoolean()
 
     return {
-      layout,
+      menuShape,
       showTheLogo,
-      showTheTags,
-      cacheTheTags,
       fixHeader,
       primaryColor,
       openAnimation,
