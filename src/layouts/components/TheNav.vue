@@ -20,7 +20,7 @@ const navStyleSettingPanelVisible = ref(false)
     <NavTimestamp />
     <a
       icon-btn text-lg i-carbon-logo-github mx-4
-      href="https://github.com/dud9/parfait"
+      href="https://github.com/dud9/toy"
       target="_blank" title="GitHub"
     />
     <NavFullScreen mr-4 />
