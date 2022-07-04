@@ -18,14 +18,17 @@ const equipName = '数控拼焊'
       text="1.2rem" lg="text-1.8rem"
       md="text-1.5rem" xl="text-2.1rem"
     >
-      <div border="1 red" h-full flex justify-center items-center>
+      <div
+        h-full flex justify-center items-center
+        text="[rgb(var(--primary-6))]" tracking-widest
+      >
         {{ equipName }}
       </div>
-      <div h-full flex justify-center items-center>
-        <span mr-2>设备</span> 在线
+      <div h-full flex justify-center items-center op-75>
+        设备: <span ml-2 text-green-500>在线</span>
       </div>
-      <div h-full flex justify-center items-center>
-        <span mr-2>边缘端</span> 在线
+      <div h-full flex justify-center items-center op-75>
+        边缘端: <span ml-2 text-red-500>离线</span>
       </div>
     </div>
     <div min-h-300px w-full mt-8 border="1 red">
