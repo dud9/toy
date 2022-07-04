@@ -17,10 +17,10 @@ watch(fixHeader, () => {
 <template>
   <a-back-top :key="key" :target-container="targetContainer">
     <a-button
-      fixed shadow-md
+      fixed shadow-md text-lg
+      flex justify-center items-center
       class="bottom-23% right-3%"
-      size="large"
-      shape="circle"
+      size="large" shape="circle"
     >
       <icon-to-top />
     </a-button>
