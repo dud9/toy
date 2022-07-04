@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import NProgress from 'nprogress'
-import { BLANK_LAYOUT } from './constants'
+import { BASE_LAYOUT, BLANK_LAYOUT } from './constants'
 import appRoutes from './routes'
 import createRouterGuard from './guards'
 import 'nprogress/nprogress.css'
@@ -12,7 +12,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: 'login',
+      redirect: '/dashboard',
     },
     {
       path: '/login',
@@ -24,6 +24,22 @@ const router = createRouter({
           component: () => import('~/pages/login/index.vue'),
           meta: {
             requiresAuth: false,
+          },
+        },
+      ],
+    },
+    {
+      path: '/dashboard',
+      component: BASE_LAYOUT,
+      children: [
+        {
+          path: '',
+          name: 'Dashboard',
+          component: () => import('~/pages/dashboard/index.vue'),
+          meta: {
+            title: '首页',
+            requiresAuth: true,
+            cached: true,
           },
         },
       ],

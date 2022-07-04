@@ -2,7 +2,6 @@ import type { Router } from 'vue-router'
 import NProgress from 'nprogress'
 import type { Menu } from '~/types'
 import { NOT_FOUND, WHITE_LIST } from '~/router/constants'
-import { findFirstPermissionRoute } from '~/utils'
 
 export default function setupPermissionGuard(router: Router) {
   router.beforeEach(async (to, _, next) => {
@@ -18,14 +17,7 @@ export default function setupPermissionGuard(router: Router) {
     // from login page
     if (to.name === 'Foo') {
       permissionStore.fetchAppMenus()
-      const path = findFirstPermissionRoute()
-      if (path) {
-        next(path)
-      }
-      else {
-        Message.error('请联系管理员配置角色菜单')
-        next()
-      }
+      next('/')
     }
     else {
       const menus = [...permissionStore.appMenus]
