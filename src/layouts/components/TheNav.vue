@@ -34,7 +34,7 @@ const rightPanelVisible = ref(false)
     />
     <NavFullScreen mr-3 />
     <DarkToggle mr-3 />
-    <NavStyleSetting v-model:visible="rightPanelVisible" mr-3 />
-    <NavAvatar />
+    <NavStyleSetting v-model:visible="rightPanelVisible" />
+    <NavAvatar mx-3 />
   </div>
 </template>

@@ -23,23 +23,21 @@ function onClick() {
 </script>
 
 <template>
-  <div>
-    <button
-      icon-btn text-lg
-      i-carbon-settings
-      @click="onClick"
-    />
-    <a-drawer
-      :visible="visible"
-      :width="300"
-      unmount-on-close
-      @ok="handleOk"
-      @cancel="handleCancel"
-    >
-      <template #title>
-        页面风格设置
-      </template>
-      <NavStyleSettingPanel />
-    </a-drawer>
-  </div>
+  <button
+    icon-btn text-lg
+    i-carbon-settings
+    @click="onClick"
+  />
+  <a-drawer
+    :visible="visible"
+    :width="300"
+    unmount-on-close
+    @ok="handleOk"
+    @cancel="handleCancel"
+  >
+    <template #title>
+      页面风格设置
+    </template>
+    <NavStyleSettingPanel />
+  </a-drawer>
 </template>
