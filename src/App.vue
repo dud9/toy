@@ -2,7 +2,7 @@
 import { replacePrimaryColor } from '~/utils'
 
 useHead({
-  title: 'Parfait',
+  title: 'Toy',
   meta: [
     { name: 'description', content: 'Opinionated Vite Starter Template' },
     {

@@ -24,7 +24,7 @@ const backTopTarget = computed(() => {
           ? 'of-x-hidden of-y-auto !mt-50px'
           : '' "
     >
-      <TheMain w-full h-full p-5 />
+      <TheMain w-full h-full px-3 py-4 />
     </a-layout-content>
   </a-layout>
   <BackTop :target-container="backTopTarget" />
