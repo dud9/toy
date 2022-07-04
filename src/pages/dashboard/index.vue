@@ -9,10 +9,13 @@ queryMenus()
 </script>
 
 <template>
-  <div>
-    <a-card>
+  <div flex="~ col" h-full w="4/5" mx="1/10" pt-12>
+    <div h-100px w-full border="1 red">
+      22
+    </div>
+    <div min-h-300px w-full mt-8 border="1 red">
       11
-    </a-card>
+    </div>
   </div>
 </template>
 
