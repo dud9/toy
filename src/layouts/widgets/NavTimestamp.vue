@@ -9,7 +9,7 @@ useIntervalFn(() => {
 </script>
 
 <template>
-  <div op-30 text-4>
+  <div op-30 text-4 font-bold>
     {{ currentTime }}
   </div>
 </template>
