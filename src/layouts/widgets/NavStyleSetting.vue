@@ -25,7 +25,7 @@ function onClick() {
 <template>
   <button
     icon-btn text-lg
-    i-carbon-settings
+    i-ic-round-settings
     @click="onClick"
   />
   <a-drawer
