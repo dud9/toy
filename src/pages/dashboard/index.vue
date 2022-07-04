@@ -24,7 +24,7 @@ const equipName = '数控拼焊'
         h-full flex justify-center items-center
         text="[rgb(var(--primary-6))]" tracking-widest
       >
-        <div i-carbon-edge-device mr-2 animate-spin />
+        <div i-carbon-edge-device mr-2 />
         {{ equipName }}
       </div>
       <div h-full flex justify-center items-center op-75>
