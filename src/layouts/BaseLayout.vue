@@ -2,10 +2,8 @@
 import BackTop from './widgets/BackTop.vue'
 import TheMain from './components/TheMain.vue'
 import TheNav from './components/TheNav.vue'
-import TheRightPanel from './components/TheRightPanel.vue'
 
 const { fixHeader } = storeToRefs(useAppStore())
-const rightPanelVisible = ref(false)
 const backTopTarget = computed(() => {
   return fixHeader.value
     ? '#content-wrapper'
@@ -28,7 +26,6 @@ const backTopTarget = computed(() => {
     >
       <TheMain w-full h-full p-5 />
     </a-layout-content>
-    <TheRightPanel v-model:visible="rightPanelVisible" />
   </a-layout>
   <BackTop :target-container="backTopTarget" />
 </template>

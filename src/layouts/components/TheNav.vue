@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import NavBreadCrumb from '../widgets/NavBreadCrumb.vue'
 import NavFullScreen from '../widgets/NavFullScreen.vue'
+import NavStyleSetting from '../widgets/NavStyleSetting.vue'
 import NavAvatar from '../widgets/NavAvatar.vue'
 import Logo from '../widgets/Logo.vue'
 import Menu from '../widgets/Menu.vue'
@@ -17,6 +18,7 @@ watchEffect(() => {
   if (!isVertical.value)
     shortLogo = width.value < 1200
 })
+const rightPanelVisible = ref(false)
 </script>
 
 <template>
@@ -32,6 +34,7 @@ watchEffect(() => {
     />
     <NavFullScreen mr-3 />
     <DarkToggle mr-3 />
+    <NavStyleSetting v-model:visible="rightPanelVisible" mr-3 />
     <NavAvatar />
   </div>
 </template>
