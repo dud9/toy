@@ -24,14 +24,14 @@ const equipName = '数控拼焊'
         h-full flex justify-center items-center
         text="[rgb(var(--primary-6))]" tracking-widest
       >
-        <div i-carbon-edge-device mr-2 />
+        <div i-carbon-edge-device mr-2 animate-spin />
         {{ equipName }}
       </div>
       <div h-full flex justify-center items-center op-75>
-        设备: <span ml-2 text-green-500> 在线 </span>
+        设备: <span ml-2 text-green-500 animate-pulse> 在线 </span>
       </div>
       <div h-full flex justify-center items-center op-75>
-        边缘端: <span ml-2 text-red-500> 离线 </span>
+        边缘端: <span ml-2 text-red-500 animate-pulse> 离线 </span>
       </div>
     </div>
     <div
