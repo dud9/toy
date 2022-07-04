@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import logo from '~/assets/logo.svg'
 
-const title = 'Parfait'
+const title = 'Toy'
 const appstore = useAppStore()
 const { menuCollapsed } = storeToRefs(appstore)
 const { toggleMenuCollapsed } = appstore
