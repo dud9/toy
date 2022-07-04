@@ -4,8 +4,8 @@
   <div
     w-full min-h-180px
     border="3 gray-600"
-    flex="~ col" text-6rem
-    py-4 op="40 dark:80" rounded-md
+    flex="~ col" text="5.6rem"
+    py-4 op="40 dark:80" rounded-lg
     hover="!text-[rgb(var(--primary-6))] op-100"
   >
     <div w-full flex justify-center items-center>

@@ -14,7 +14,7 @@ const equipName = '数控拼焊'
 <template>
   <div flex="~ col" h-auto mb-30px w="4/5" mx="1/10" pt-10 font-bold>
     <div
-      h-auto min-h-50px w-full py-5 px-2
+      h-auto min-h-50px w-full py-4 px-2
       border="5 [var(--color-primary-light-2)]"
       rounded-3 grid="~ flow-row-dense cols-3"
       text="1rem" sm="text-1.2rem" md="text-1.5rem"
@@ -37,10 +37,10 @@ const equipName = '数控拼焊'
     <div
       min-h-300px w-full h-auto mt-8
       flex justify-center items-center
-      grid="~ cols-1" gap="2"
-      sm="grid !grid-cols-2 gap-4"
-      md="grid !grid-cols-3 gap-6"
-      lg="grid !grid-cols-4 gap-9"
+      grid="~ cols-1" gap="x-4 y-2"
+      sm="grid !grid-cols-2 !gap-x-8 !gap-y-6"
+      md="grid !grid-cols-3 !gap-x-12 !gap-y-8"
+      lg="grid !grid-cols-4 !gap-x-12 !gap-y-8"
     >
       <MenuItem v-for="i in 7" :key="i" />
     </div>
