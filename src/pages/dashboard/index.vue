@@ -12,7 +12,7 @@ const equipName = '数控拼焊'
 </script>
 
 <template>
-  <div flex="~ col" h-auto mb-30px w="4/5" mx="1/10" pt-12 font-bold border="2 red">
+  <div flex="~ col" h-auto mb-30px w="4/5" mx="1/10" pt-10 font-bold>
     <div
       h-auto min-h-50px w-full py-5 px-2
       border="5 [var(--color-primary-light-2)]"
@@ -35,16 +35,14 @@ const equipName = '数控拼焊'
       </div>
     </div>
     <div
-      border="2 red"
       min-h-300px w-full h-auto mt-8
-      grid="~ cols-1" gap="3"
-      sm="grid !grid-cols-2 gap-6"
-      lg="grid !grid-cols-3 gap-12"
+      flex justify-center items-center
+      grid="~ cols-1" gap="2"
+      sm="grid !grid-cols-2 gap-4"
+      md="grid !grid-cols-3 gap-6"
+      lg="grid !grid-cols-4 gap-9"
     >
       <MenuItem v-for="i in 7" :key="i" />
-    </div>
-    <div h-30px>
-      111
     </div>
   </div>
 </template>
