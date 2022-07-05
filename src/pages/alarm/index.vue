@@ -122,31 +122,32 @@ function formatRowIndex(idx: number) {
             </template>
           </a-table-column>
           <a-table-column
-            title="名称"
-            data-index="name"
+            title="设备名称"
+            data-index="equipName"
             align="center"
           />
           <a-table-column
-            title="角色描述"
-            data-index="description"
+            title="告警等级"
+            data-index="alarmLevel"
+            align="center"
+          >
+            <template #cell="{ record }">
+              <span v-if="record.alarmLevel === 1" font-bold text-yellow-500>轻微告警</span>
+              <span v-else font-bold text-red-500> 严重告警</span>
+            </template>
+          </a-table-column>
+          <a-table-column
+            title="告警内容"
+            data-index="alarmContent"
             align="center"
           />
           <a-table-column
-            title="创建时间"
+            title="告警时间"
             data-index="createTime"
             align="center"
           >
             <template #cell="{ record }">
-              {{ formartDate(record.createTime) }}
-            </template>
-          </a-table-column>
-          <a-table-column
-            title="修改时间"
-            data-index="updateTime"
-            align="center"
-          >
-            <template #cell="{ record }">
-              {{ formartDate(record.updateTime) }}
+              {{ formartDate(record.alarmTime) }}
             </template>
           </a-table-column>
         </template>
