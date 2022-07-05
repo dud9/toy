@@ -1,4 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { Menu } from '~/types'
+
+const {
+  item = {},
+} = defineProps<{
+  item?: Menu
+}>()
+</script>
 
 <template>
   <div
@@ -8,11 +16,13 @@
     py-4 op="40 dark:80" rounded-lg
     hover="!text-[rgb(var(--primary-6))] op-100"
   >
-    <div w-full flex justify-center items-center>
-      <div i-carbon-bot />
-    </div>
-    <div mt-4 flex justify-center items-center text="!1.5rem ![rgb(var(--primary-6))]">
-      菜单1
-    </div>
+    <RouterLink :to="item?.path || '/'">
+      <div w-full flex justify-center items-center>
+        <div i-carbon-bot />
+      </div>
+      <div mt-4 flex justify-center items-center text="!1.5rem ![rgb(var(--primary-6))]">
+        {{ item?.title || '' }}
+      </div>
+    </RouterLink>
   </div>
 </template>
