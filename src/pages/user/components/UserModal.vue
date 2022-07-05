@@ -24,8 +24,6 @@ const baseFormModel = {
   password: '',
   checkPass: '',
   avatar: undefined,
-  phone: '',
-  email: '',
   roleId: undefined,
 }
 const formModel = reactive<Record<string, any>>({
@@ -130,20 +128,6 @@ function handleCancel() {
             <icon-lock />
           </template>
         </a-input-password>
-      </a-form-item>
-      <a-form-item field="phone" label="手机号" hide-asterisk feedback>
-        <a-input
-          v-model="formModel.phone"
-          placeholder="请输入手机号..."
-          allow-clear
-        />
-      </a-form-item>
-      <a-form-item field="email" label="邮箱" hide-asterisk feedback>
-        <a-input
-          v-model="formModel.email"
-          placeholder="请输入邮箱..."
-          allow-clear
-        />
       </a-form-item>
       <a-form-item
         field="roleId" label="角色" hide-asterisk feedback

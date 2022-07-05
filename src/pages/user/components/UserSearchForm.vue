@@ -12,10 +12,9 @@ function generateFormModel() {
   return {
     username: '',
     name: '',
-    phone: '',
     roleId: '',
-    email: '',
     createTime: [],
+    updateTime: [],
   }
 }
 const formModel = ref(generateFormModel())
@@ -61,15 +60,6 @@ defineExpose({
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item field="phone" label="手机号">
-              <a-input
-                v-model="formModel.phone"
-                placeholder="请输入手机号"
-                allow-clear
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :span="8">
             <a-form-item field="roleId" label="角色">
               <a-select
                 v-model="formModel.roleId"
@@ -80,18 +70,17 @@ defineExpose({
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item field="email" label="电子邮箱">
-              <a-input
-                v-model="formModel.email"
-                placeholder="请输入电子邮箱"
-                allow-clear
+            <a-form-item field="createTime" label="创建时间">
+              <a-range-picker
+                v-model="formModel.createTime"
+                w-full allow-clear
               />
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item field="createTime" label="创建时间">
+            <a-form-item field="updateTime" label="修改时间">
               <a-range-picker
-                v-model="formModel.createTime"
+                v-model="formModel.updateTime"
                 w-full allow-clear
               />
             </a-form-item>
