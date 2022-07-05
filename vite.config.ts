@@ -72,6 +72,15 @@ export default defineConfig({
         }),
         presetWind(),
       ],
+      theme: {
+        breakpoints: {
+          xs: '320px',
+          sm: '640px',
+          md: '850px',
+          lg: '1200px',
+          xl: '1500px',
+        },
+      },
     }),
 
     // https://github.com/antfu/vite-plugin-md
