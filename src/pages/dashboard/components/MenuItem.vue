@@ -16,7 +16,7 @@ const { menuInverted } = storeToRefs(useAppStore())
     flex="~ col" text="5.6rem" duration-300
     py-4 rounded-lg hover="translate-y-[-4px]"
     :class="{
-      'dark:!bg-[var(--color-bg-3)] !bg-[rgb(var(--primary-1))]': menuInverted,
+      '!bg-[rgb(var(--primary-1))] dark:!bg-[rgb(35,35,36)]': menuInverted,
       'border-1 !border-[var(--color-neutral-3)]': !menuInverted,
     }"
   >
