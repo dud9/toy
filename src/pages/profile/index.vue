@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div text-50px>
-    Profile
+  <div>
+    <PageHeader />
   </div>
 </template>
