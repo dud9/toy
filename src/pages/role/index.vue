@@ -104,10 +104,10 @@ function formatRowIndex(idx: number) {
             align="center"
           >
             <template #cell>
-              <a-button type="text" size="small">
+              <a-button type="text" size="small" font-bold>
                 编辑
               </a-button>
-              <a-button type="text" size="small">
+              <a-button type="text" size="small" font-bold>
                 删除
               </a-button>
             </template>
