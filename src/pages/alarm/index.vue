@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { IconArrowRise } from '@arco-design/web-vue/es/icon'
 import AlarmSearchForm from './components/AlarmSearchForm.vue'
 import type { Pagination, SelectOptionData } from '~/types'
 
@@ -70,7 +71,7 @@ function formatRowIndex(idx: number) {
             <span mr-4 op-80>告警总计</span>
             <a-statistic :value="1000" :precision="0" :value-from="0" :start="true" animation :value-style="{ color: '#0fbf60' }">
               <template #prefix>
-                <icon-arrow-rise />
+                <IconArrowRise />
               </template>
               <template #suffix>
                 条
@@ -81,7 +82,7 @@ function formatRowIndex(idx: number) {
             <span mr-4 op-80>轻微告警</span>
             <a-statistic :value="453" :precision="0" :value-from="0" :start="true" animation :value-style="{ color: '#f59e0b' }">
               <template #prefix>
-                <icon-arrow-rise />
+                <IconArrowRise />
               </template>
               <template #suffix>
                 条
@@ -92,7 +93,7 @@ function formatRowIndex(idx: number) {
             <span mr-4 op-80>严重告警</span>
             <a-statistic :value="547" :precision="0" :value-from="0" :start="true" animation :value-style="{ color: '#e11d48' }">
               <template #prefix>
-                <icon-arrow-rise />
+                <IconArrowRise />
               </template>
               <template #suffix>
                 条
