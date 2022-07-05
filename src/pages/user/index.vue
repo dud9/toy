@@ -117,22 +117,21 @@ function saveUser(data: Record<string, any>) {
             </template>
           </a-table-column>
           <a-table-column
-            title="手机号"
-            data-index="phone"
-            align="center"
-          />
-          <a-table-column
-            title="邮箱"
-            data-index="email"
-            align="center"
-          />
-          <a-table-column
             title="创建时间"
             data-index="createTime"
             align="center"
           >
             <template #cell="{ record }">
               {{ formartDate(record.createTime) }}
+            </template>
+          </a-table-column>
+          <a-table-column
+            title="修改时间"
+            data-index="updateTime"
+            align="center"
+          >
+            <template #cell="{ record }">
+              {{ formartDate(record.updateTime) }}
             </template>
           </a-table-column>
           <a-table-column

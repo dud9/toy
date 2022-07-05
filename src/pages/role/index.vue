@@ -90,6 +90,15 @@ function formatRowIndex(idx: number) {
             </template>
           </a-table-column>
           <a-table-column
+            title="修改时间"
+            data-index="updateTime"
+            align="center"
+          >
+            <template #cell="{ record }">
+              {{ formartDate(record.updateTime) }}
+            </template>
+          </a-table-column>
+          <a-table-column
             title="操作"
             data-index="operations"
             align="center"
