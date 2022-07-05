@@ -55,9 +55,9 @@ function formatRowIndex(idx: number) {
       <a-table
         row-key="id"
         :loading="loading"
-        :pagination="pagination"
         :data="tabledata"
         :bordered="false"
+        :pagination="tabledata.length > pagination.pageSize ? pagination : false"
         @page-change="onPageChange"
       >
         <template #columns>
