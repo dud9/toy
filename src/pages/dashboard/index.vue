@@ -37,7 +37,6 @@ const equipName = '数控拼焊'
     <div
       class="menu"
       min-h-300px w-full h-auto mt-8
-      flex justify-center items-center
       grid="~ cols-1" gap="x-4 y-2"
       sm="grid !grid-cols-2 !gap-x-8 !gap-y-6"
       md="grid !grid-cols-3 !gap-x-12 !gap-y-8"
