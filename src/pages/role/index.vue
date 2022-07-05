@@ -49,6 +49,7 @@ function formatRowIndex(idx: number) {
 
 <template>
   <div>
+    <PageHeader />
     <a-card title="查询角色">
       <RoleSearchForm ref="refSearchForm" @fetchData="fetchRoleData" />
       <a-table

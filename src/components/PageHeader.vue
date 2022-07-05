@@ -16,7 +16,7 @@ const pageTitle = computed(() => {
 </script>
 
 <template>
-  <div h-50px w-full flex justify-between items-center px-4>
+  <div h-50px w-full flex justify-between items-center px-4 mb-2>
     <div flex-inline font-bold text="lg ![rgb(var(--primary-6))]">
       <div i-carbon-plane-sea mr-2 />
       {{ pageTitle }}
