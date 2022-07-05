@@ -28,10 +28,10 @@ const equipName = '数控拼焊'
         {{ equipName }}
       </div>
       <div h-full flex justify-center items-center op-75>
-        设备: <span ml-2 text-green-500> 在线 </span>
+        设备: <span ml-2 text-green-500 animate-pulse> 在线 </span>
       </div>
       <div h-full flex justify-center items-center op-75>
-        边缘端: <span ml-2 text-red-500> 离线 </span>
+        边缘端: <span ml-2 text-red-500 animate-pulse> 离线 </span>
       </div>
     </div>
     <div
