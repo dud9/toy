@@ -62,11 +62,43 @@ function formatRowIndex(idx: number) {
     <PageHeader />
     <a-card>
       <template #title>
-        <div grid="~ cols-5" wrap>
-          <span mr-10>查询告警</span>
-          <span>共计: 1000</span>
-          <span>严重告警: 1000</span>
-          <span>轻微告警: 1000</span>
+        <div grid="~ xs:cols-2 sm:cols-3 md:cols-5">
+          <div flex items-center>
+            查询告警
+          </div>
+          <div flex items-center font-bold lt-md:hidden>
+            <span mr-4 op-80>告警总计</span>
+            <a-statistic :value="1000" :precision="0" :value-from="0" :start="true" animation :value-style="{ color: '#0fbf60' }">
+              <template #prefix>
+                <icon-arrow-rise />
+              </template>
+              <template #suffix>
+                条
+              </template>
+            </a-statistic>
+          </div>
+          <div flex items-center font-bold lt-sm:hidden>
+            <span mr-4 op-80>轻微告警</span>
+            <a-statistic :value="453" :precision="0" :value-from="0" :start="true" animation :value-style="{ color: '#f59e0b' }">
+              <template #prefix>
+                <icon-arrow-rise />
+              </template>
+              <template #suffix>
+                条
+              </template>
+            </a-statistic>
+          </div>
+          <div flex items-center font-bold lt-sm:hidden>
+            <span mr-4 op-80>严重告警</span>
+            <a-statistic :value="547" :precision="0" :value-from="0" :start="true" animation :value-style="{ color: '#e11d48' }">
+              <template #prefix>
+                <icon-arrow-rise />
+              </template>
+              <template #suffix>
+                条
+              </template>
+            </a-statistic>
+          </div>
         </div>
       </template>
       <AlarmSearchForm ref="refSearchForm" :alarm-level-options="alarmLevelOptions" @fetchData="fetchAlarmData" />
