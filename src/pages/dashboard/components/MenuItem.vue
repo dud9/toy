@@ -7,17 +7,19 @@ const {
   item?: Menu
 }>()
 
-const { menuInverted } = storeToRefs(useAppStore())
+const { menuInverted, menuShape } = storeToRefs(useAppStore())
 </script>
 
 <template>
   <div
-    w-full min-h-180px class="wrap" shadow-md
-    flex="~ col" text="5.6rem" duration-300
-    py-4 rounded-lg hover="translate-y-[-4px]"
+    class="wrap" shadow-md
+    flex="~ col" text="5.6rem" py-4
+    hover="translate-y-[-4px]" duration-300
     :class="{
       '!bg-[rgb(var(--primary-1))] dark:!bg-[rgb(35,35,36)]': menuInverted,
       'border-1 !border-[var(--color-neutral-3)]': !menuInverted,
+      '!w-full !min-h-180px !rounded-lg': menuShape === 'square',
+      '!w-210px !h-210px !rounded-full': menuShape === 'round',
     }"
   >
     <RouterLink :to="item?.path || '/'">

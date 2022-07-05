@@ -25,6 +25,7 @@ const switchItems = [
   { name: '固定页头', prop: 'fixHeader', type: 'switch', dependOn: undefined },
   { name: '主要色调', prop: 'primaryColor', type: 'colorPicker', dependOn: undefined },
   { name: '菜单反转色', prop: 'menuInverted', type: 'switch', dependOn: undefined },
+  { name: '菜单形状', prop: 'menuShape', type: 'select', dependOn: undefined },
   { name: '页面切换动画', prop: 'openAnimation', type: 'switch', dependOn: undefined },
   { name: '页面切换动画类型', prop: 'animationMode', type: 'select', dependOn: 'openAnimation' },
 ]
@@ -43,6 +44,10 @@ const selectOptions: Record<string, any> = {
     { label: '缩放消退', value: 'fade-scale' },
     { label: '渐变', value: 'zoom-fade' },
     { label: '闪现', value: 'zoom-out' },
+  ],
+  menuShape: [
+    { label: '方形', value: 'square' },
+    { label: '圆形', value: 'round' },
   ],
 }
 </script>

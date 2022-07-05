@@ -1,6 +1,6 @@
 export const baseSettings = reactive<Record<string, any>>({
   /**
-   * the shape of menu
+   * the shape of menu - 'square' | 'round'
    *
    * @default: 'square'
    */
