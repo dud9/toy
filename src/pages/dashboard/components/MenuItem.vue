@@ -8,6 +8,10 @@ const {
 }>()
 
 const { menuInverted, menuShape } = storeToRefs(useAppStore())
+const iconMap: Record<string, string> = {
+  user: '',
+  role: '',
+}
 </script>
 
 <template>
