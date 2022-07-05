@@ -9,8 +9,13 @@ const {
 
 const { menuInverted, menuShape } = storeToRefs(useAppStore())
 const iconMap: Record<string, string> = {
-  user: '',
-  role: '',
+  user: 'i-carbon-user',
+  role: 'i-carbon-user-certification',
+  reactData: 'i-carbon-chart-area-smooth',
+  historyData: 'i-carbon-chart-combo',
+  alarm: 'i-mdi-alarm-light-outline',
+  device: 'i-ri-device-line',
+  api: 'i-carbon-document',
 }
 </script>
 
@@ -28,7 +33,7 @@ const iconMap: Record<string, string> = {
   >
     <RouterLink :to="item?.path || '/'">
       <div w-full flex justify-center items-center>
-        <div i-carbon-bot text="![rgb(var(--primary-3))]" />
+        <div :class="iconMap[item.icon!]" text="![rgb(var(--primary-3))]" />
       </div>
       <div mt-4 flex justify-center items-center text="!1.5rem" op-50>
         {{ item?.title || '' }}
