@@ -25,7 +25,7 @@ const backTopTarget = computed(() => {
           : '' "
     >
       <a-layout-content>
-        <TheMain w-full h-full px-3 py-4 />
+        <TheMain w-full h-full px-3 py-2 />
       </a-layout-content>
     </a-layout>
   </a-layout>
