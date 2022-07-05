@@ -42,7 +42,7 @@ const equipName = '数控拼焊'
       md="grid !grid-cols-3 !gap-x-12 !gap-y-8"
       lg="grid !grid-cols-4 !gap-x-12 !gap-y-8"
     >
-      <MenuItem v-for="i in 7" :key="i" />
+      <MenuItem v-for="item, idx in appMenus" :key="idx" :item="item" />
     </div>
   </div>
 </template>

@@ -19,9 +19,9 @@ const switchRect = reactive<any>({
   animationMode,
 })
 const switchItems = [
-  { name: '主要色调', prop: 'primaryColor', type: 'colorPicker', dependOn: undefined },
   { name: '页面Logo', prop: 'showTheLogo', type: 'switch', dependOn: undefined },
   { name: '固定页头', prop: 'fixHeader', type: 'switch', dependOn: undefined },
+  { name: '主要色调', prop: 'primaryColor', type: 'colorPicker', dependOn: undefined },
   { name: '页面切换动画', prop: 'openAnimation', type: 'switch', dependOn: undefined },
   { name: '页面切换动画类型', prop: 'animationMode', type: 'select', dependOn: 'openAnimation' },
 ]
