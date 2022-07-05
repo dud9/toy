@@ -6,6 +6,7 @@ function generateFormModel() {
   return {
     name: '',
     createTime: [],
+    updateTime: [],
   }
 }
 const formModel = ref(generateFormModel())
@@ -48,7 +49,14 @@ defineExpose({
               />
             </a-form-item>
           </a-col>
-          <a-col :span="8" />
+          <a-col :span="8">
+            <a-form-item field="updateTime" label="修改时间">
+              <a-range-picker
+                v-model="formModel.updateTime"
+                w-full
+              />
+            </a-form-item>
+          </a-col>
         </a-row>
       </a-form>
     </a-col>
