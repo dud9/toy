@@ -132,7 +132,7 @@ function formatRowIndex(idx: number) {
             align="center"
           >
             <template #cell="{ record }">
-              <span v-if="record.alarmLevel === 1" font-bold text-yellow-500>轻微告警</span>
+              <span v-if="record.alarmLevel === 1" font-bold text-yellow-500> 轻微告警 </span>
               <span v-else font-bold text-red-500> 严重告警</span>
             </template>
           </a-table-column>
