@@ -11,10 +11,9 @@ const {
 <template>
   <div
     w-full min-h-180px
-    border="3 gray-600"
-    flex="~ col" text="5.6rem"
-    py-4 op="40 dark:80" rounded-lg
-    hover="!text-[rgb(var(--primary-6))] op-100"
+    border="1px [!var(--color-border)]"
+    flex="~ col" text="5.6rem" transition="all duration-300"
+    py-4 rounded-lg hover="translate-y-[-4px] "
   >
     <RouterLink :to="item?.path || '/'">
       <div w-full flex justify-center items-center>

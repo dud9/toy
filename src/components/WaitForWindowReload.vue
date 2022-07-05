@@ -6,7 +6,7 @@
     <div i-carbon-logo-pinterest class="bg-[rgb(var(--primary-6))]" text-80px />
     <a-spin dot :size="24" class="mt-1/10" />
     <div text-36px mt-120px font-bold>
-      Parfait
+      TOY
     </div>
   </div>
 </template>

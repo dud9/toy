@@ -23,7 +23,7 @@ useHead({
 const { primaryColor } = storeToRefs(useAppStore())
 replacePrimaryColor(primaryColor.value)
 const { appReloading, handleReload } = useReload()
-handleReload(1500)
+handleReload(1000)
 </script>
 
 <template>

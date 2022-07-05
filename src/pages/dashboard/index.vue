@@ -48,7 +48,7 @@ const equipName = '数控拼焊'
   </div>
 </template>
 
-<style>
+<style scoped>
 @media (max-width: 640px) {
   .menu {
     display: grid;
