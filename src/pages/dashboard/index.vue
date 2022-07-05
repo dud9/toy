@@ -35,6 +35,7 @@ const equipName = '数控拼焊'
       </div>
     </div>
     <div
+      class="menu"
       min-h-300px w-full h-auto mt-8
       flex justify-center items-center
       grid="~ cols-1" gap="x-4 y-2"
@@ -46,4 +47,17 @@ const equipName = '数控拼焊'
     </div>
   </div>
 </template>
+
+<style>
+@media (max-width: 640px) {
+  .menu {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    -webkit-row-gap: 0.65rem !important;
+    -moz-row-gap: 0.65rem !important;
+    grid-row-gap: 0.65rem !important;
+    row-gap: 0.65rem !important;
+  }
+}
+</style>
 
