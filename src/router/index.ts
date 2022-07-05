@@ -5,7 +5,7 @@ import appRoutes from './routes'
 import createRouterGuard from './guards'
 import 'nprogress/nprogress.css'
 
-NProgress.configure({ showSpinner: false, easing: 'ease', speed: 500 })
+NProgress.configure({ showSpinner: false, easing: 'ease', speed: 1000 })
 
 const router = createRouter({
   history: createWebHashHistory('/'),

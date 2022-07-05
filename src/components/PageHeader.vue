@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconArrowLeft } from '@arco-design/web-vue/es/icon'
+import { IconArrowLeft, IconRefresh } from '@arco-design/web-vue/es/icon'
 
 const {
   title = '',
@@ -13,6 +13,15 @@ const pageTitle = computed(() => {
     ? route.meta?.title || ''
     : title
 })
+const router = useRouter()
+function refresh() {
+  const { fullPath } = route
+  nextTick(() => {
+    router.replace({
+      path: `/redirect${fullPath}`,
+    })
+  })
+}
 </script>
 
 <template>
@@ -21,11 +30,19 @@ const pageTitle = computed(() => {
       <div i-carbon-plane-sea mr-2 translate-y-1 />
       {{ pageTitle }}
     </div>
-    <a-button type="primary" font-bold @click="$router.push('/')">
-      <template #icon>
-        <IconArrowLeft />
-      </template>
-      返回
-    </a-button>
+    <div flex-inline>
+      <a-button type="primary" font-bold mr-3 @click="refresh">
+        <template #icon>
+          <IconRefresh />
+        </template>
+        刷新
+      </a-button>
+      <a-button type="primary" status="danger" font-bold @click="$router.push('/')">
+        <template #icon>
+          <IconArrowLeft />
+        </template>
+        返回
+      </a-button>
+    </div>
   </div>
 </template>

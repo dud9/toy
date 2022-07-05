@@ -34,8 +34,6 @@ export default function setupPermissionGuard(router: Router) {
     else
       next(NOT_FOUND)
 
-    useTimeoutFn(() => {
-      NProgress.done()
-    }, 200)
+    NProgress.done()
   })
 }

@@ -3,7 +3,8 @@ import NProgress from 'nprogress'
 
 export default function setupLoginGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
-    NProgress.start()
+    if (!to.path.startsWith('/redirect'))
+      NProgress.start()
     const { user } = useUserStore()
     if (user) {
       if (user.roleId) {
@@ -13,11 +14,8 @@ export default function setupLoginGuard(router: Router) {
         useLogout()
         Message.error('请联系管理员配置用户角色')
         next('/login')
-        if (from.name === 'Login') {
-          useTimeoutFn(() => {
-            NProgress.done()
-          }, 200)
-        }
+        if (from.name === 'Login')
+          NProgress.done()
       }
     }
     else {
