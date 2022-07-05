@@ -64,7 +64,7 @@ function formatRowIndex(idx: number) {
           <a-table-column
             title="序号"
             data-index="number"
-            :cell-style="{ 'text-align': 'center' }"
+            align="center"
           >
             <template #cell="{ rowIndex }">
               {{ formatRowIndex(rowIndex) }}
@@ -73,17 +73,17 @@ function formatRowIndex(idx: number) {
           <a-table-column
             title="名称"
             data-index="name"
-            :cell-style="{ 'text-align': 'center' }"
+            align="center"
           />
           <a-table-column
             title="角色描述"
             data-index="description"
-            :cell-style="{ 'text-align': 'center' }"
+            align="center"
           />
           <a-table-column
             title="创建时间"
             data-index="createTime"
-            :cell-style="{ 'text-align': 'center' }"
+            align="center"
           >
             <template #cell="{ record }">
               {{ formartDate(record.createTime) }}
@@ -92,7 +92,7 @@ function formatRowIndex(idx: number) {
           <a-table-column
             title="操作"
             data-index="operations"
-            :cell-style="{ 'text-align': 'center' }"
+            align="center"
           >
             <template #cell>
               <a-button type="text" size="small">
