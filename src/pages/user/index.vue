@@ -140,10 +140,10 @@ function saveUser(data: Record<string, any>) {
             align="center"
           >
             <template #cell="{ record }">
-              <a-button type="text" size="small" @click="showUserModal('edit', record)">
+              <a-button type="text" size="small" font-bold @click="showUserModal('edit', record)">
                 编辑
               </a-button>
-              <a-button type="text" size="small">
+              <a-button type="text" size="small" font-bold>
                 删除
               </a-button>
             </template>

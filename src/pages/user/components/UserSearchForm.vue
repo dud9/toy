@@ -93,13 +93,13 @@ defineExpose({
     <a-divider class="!h-84px" direction="vertical" />
     <a-col flex="86px">
       <a-space direction="vertical" :size="18">
-        <a-button type="primary" @click="search">
+        <a-button type="primary" font-bold @click="search">
           <template #icon>
             <icon-search />
           </template>
           搜索
         </a-button>
-        <a-button @click="reset">
+        <a-button font-bold @click="reset">
           <template #icon>
             <icon-refresh />
           </template>
