@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div text-50px>
-    React Data
+  <div>
+    <PageHeader />
   </div>
 </template>

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div text-50px>
-    History Data
+  <div>
+    <PageHeader />
   </div>
 </template>
