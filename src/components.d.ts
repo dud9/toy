@@ -27,6 +27,7 @@ declare module '@vue/runtime-core' {
     ASwitch: typeof import('@arco-design/web-vue')['Switch']
     AvatarUpload: typeof import('./components/AvatarUpload.vue')['default']
     DarkToggle: typeof import('./components/DarkToggle.vue')['default']
+    PageHeader: typeof import('./components/PageHeader.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     WaitForWindowReload: typeof import('./components/WaitForWindowReload.vue')['default']

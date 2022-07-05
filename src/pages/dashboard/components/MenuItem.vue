@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Menu } from '~/types'
+import { iconMap } from '~/menus'
 
 const {
   item = {},
@@ -8,15 +9,6 @@ const {
 }>()
 
 const { menuInverted, menuShape } = storeToRefs(useAppStore())
-const iconMap: Record<string, string> = {
-  user: 'i-carbon-user',
-  role: 'i-carbon-user-certification',
-  reactData: 'i-carbon-chart-area-smooth',
-  historyData: 'i-carbon-chart-combo',
-  alarm: 'i-mdi-alarm-light-outline',
-  device: 'i-ri-device-line',
-  api: 'i-carbon-document',
-}
 </script>
 
 <template>

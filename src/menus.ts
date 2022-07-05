@@ -44,3 +44,14 @@ export const menus: Menu[] = [
   },
 ]
 
+export const iconMap: Record<string, string> = {
+  default: 'i-carbon-plane-sea',
+  user: 'i-carbon-user',
+  role: 'i-carbon-user-certification',
+  reactData: 'i-carbon-chart-area-smooth',
+  historyData: 'i-carbon-chart-combo',
+  alarm: 'i-mdi-alarm-light-outline',
+  device: 'i-ri-device-line',
+  api: 'i-carbon-document',
+}
+

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div text-50px>
-    Api Manage
+  <div>
+    <PageHeader />
   </div>
 </template>
