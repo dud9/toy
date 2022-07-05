@@ -63,7 +63,7 @@ function formatRowIndex(idx: number) {
     <PageHeader />
     <a-card>
       <template #title>
-        <div grid="~ xs:cols-2 sm:cols-3 md:cols-5">
+        <div grid="~ xs:cols-2 sm:cols-3 md:cols-4 lg:cols-5">
           <div flex items-center>
             查询告警
           </div>
