@@ -10,6 +10,7 @@ export const useAppStore = defineStore(
 
     const {
       menuShape,
+      menuInverted,
       showTheLogo,
       fixHeader,
       primaryColor,
@@ -46,6 +47,7 @@ export const useAppStore = defineStore(
 
     return {
       menuShape,
+      menuInverted,
       showTheLogo,
       fixHeader,
       primaryColor,

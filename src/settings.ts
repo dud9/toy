@@ -1,8 +1,16 @@
 export const baseSettings = reactive<Record<string, any>>({
   /**
    * the shape of menu
+   *
+   * @default: 'square'
    */
   menuShape: 'square',
+  /**
+   * whether invert the menu background
+   *
+   * @default: false
+   */
+  menuInverted: false,
   /**
    * whether show the logo
    *

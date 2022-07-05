@@ -4,6 +4,7 @@ import ColorPicker from './ColorPicker.vue'
 const appStore = useAppStore()
 const {
   menuShape,
+  menuInverted,
   fixHeader,
   showTheLogo,
   primaryColor,
@@ -12,6 +13,7 @@ const {
 } = appStore.getStageVal()
 const switchRect = reactive<any>({
   menuShape,
+  menuInverted,
   primaryColor,
   fixHeader,
   showTheLogo,
@@ -22,6 +24,7 @@ const switchItems = [
   { name: '页面Logo', prop: 'showTheLogo', type: 'switch', dependOn: undefined },
   { name: '固定页头', prop: 'fixHeader', type: 'switch', dependOn: undefined },
   { name: '主要色调', prop: 'primaryColor', type: 'colorPicker', dependOn: undefined },
+  { name: '菜单反转色', prop: 'menuInverted', type: 'switch', dependOn: undefined },
   { name: '页面切换动画', prop: 'openAnimation', type: 'switch', dependOn: undefined },
   { name: '页面切换动画类型', prop: 'animationMode', type: 'select', dependOn: 'openAnimation' },
 ]
