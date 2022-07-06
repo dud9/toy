@@ -6,4 +6,12 @@ export class UserApi {
   static deleteUserById(params: { id?: number }) {
     return useRequest.delete('/userApi/user', { urlAdd: params })
   }
+
+  static addUser(params: Record<string, any>) {
+    return useRequest.post('/userApi/user', { body: params })
+  }
+
+  static updateUser(params: Record<string, any>) {
+    return useRequest.put('/userApi/user', { body: params })
+  }
 }
