@@ -1,5 +1,9 @@
 export class UserApi {
-  static fetchUserList() {
+  static fetchUserList(query: Record<string, any>) {
+    return useRequest.get('/userApi/user', { urlAdd: query })
+  }
+
+  static fakeList() {
     return {
       code: 0,
       data: [
