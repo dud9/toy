@@ -19,7 +19,16 @@ function generateFormModel() {
 }
 const formModel = ref(generateFormModel())
 function search() {
-  emit('fetchData', formModel.value)
+  const params: Record<string, any> = JSON.parse(JSON.stringify(unref(formModel)))
+  const { createTime, updateTime } = params as any
+  for (const [k, v] of Object.entries({ createTime, updateTime })) {
+    if (!Array.isArray(v) || v.length === 0)
+      continue
+    const [start, end] = v
+    if (start === end)
+      params[k] = [`${start} 00:00:00`, `${end} 23:59:59`]
+  }
+  emit('fetchData', params)
 }
 search()
 function reset() {

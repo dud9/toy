@@ -2,7 +2,7 @@
 import UserModal from './components/UserModal.vue'
 import UserSearchForm from './components/UserSearchForm.vue'
 import { saveUserHandler } from './helper'
-import type { Pagination, SelectOptionData } from '~/types'
+import type { Pagination, Role, SelectOptionData } from '~/types'
 
 const { loading, setLoading } = useLoading()
 let tabledata = $ref([])
@@ -14,10 +14,9 @@ const pagination = reactive({
   ...basePagination,
 })
 let roleOptions = $ref<SelectOptionData[]>()
-function fetchRoleOptions() {
-  const { code, data } = RoleApi.fetchRoleList()
-  if (code === 0)
-    roleOptions = data.map(i => ({ value: i.id, label: i.name }))
+async function fetchRoleOptions() {
+  const { data: { records } } = await RoleApi.fetchRoleList({}) as any
+  roleOptions = records.map((i: Role) => ({ value: i.id, label: i.name }))
 }
 fetchRoleOptions()
 async function fetchTableData(params: Record<string, any>) {

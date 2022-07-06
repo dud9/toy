@@ -11,14 +11,14 @@ const basePagination: Pagination = {
 const pagination = reactive({
   ...basePagination,
 })
-function fetchRoleData(params: Record<string, any>) {
+async function fetchRoleData(params: Record<string, any>) {
   params = { ...basePagination, ...params }
   setLoading(true)
   try {
-    const { data } = RoleApi.fetchRoleList()
-    tabledata = data as any
+    const { data: { records, total } } = await RoleApi.fetchRoleList(params) as any
+    tabledata = records as any
     pagination.current = params.current
-    pagination.total = data.length
+    pagination.total = total
   }
   catch (err) {
     // you can report use errorHandler or other

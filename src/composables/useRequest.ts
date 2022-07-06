@@ -23,7 +23,9 @@ function addUrlParams(params?: AnyObject | AnyObject[]) {
     paramStr += `&${encodeURIComponent(k)}=${encodeURIComponent(v as string)}`
   }
 
-  return `?${paramStr.slice(1)}`
+  return paramStr === ''
+    ? paramStr
+    : `?${paramStr.slice(1)}`
 }
 
 export const useRequest = {
