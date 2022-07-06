@@ -13,11 +13,11 @@ const emit = defineEmits(['update:avatar'])
 const file = ref()
 const imagePreviewVisible = ref(false)
 watch(() => avatar, (val) => {
-  if (val) {
-    file.value = {
-      url: avatar,
-    }
-  }
+  file.value = val
+    ? {
+        url: avatar,
+      }
+    : undefined
 })
 
 function onChange(_: any, currentFile: any) {
