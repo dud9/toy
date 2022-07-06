@@ -75,10 +75,9 @@ async function saveUser(data: Record<string, any>) {
     useTimeoutFn(() => {
       userModalVisible = false
       onPageChange(pagination.current)
+      if (showUserModalType === 'edit' && unref(user)?.id === data.id)
+        userStore.updateUser(data)
     }, 500)
-
-    if (showUserModalType === 'edit' && unref(user)?.id === data.id)
-      userStore.updateUser(data)
   }
 }
 
