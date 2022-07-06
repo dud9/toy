@@ -51,6 +51,11 @@ function formatRowIndex(idx: number) {
   <div>
     <PageHeader />
     <a-card title="查询角色">
+      <template #extra>
+        <a-button type="text" size="small" font-bold>
+          添加
+        </a-button>
+      </template>
       <RoleSearchForm ref="refSearchForm" @fetchData="fetchRoleData" />
       <a-table
         row-key="id"
