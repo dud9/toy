@@ -35,6 +35,7 @@ declare module '@vue/runtime-core' {
     ASwitch: typeof import('@arco-design/web-vue')['Switch']
     ATable: typeof import('@arco-design/web-vue')['Table']
     ATableColumn: typeof import('@arco-design/web-vue')['TableColumn']
+    ATree: typeof import('@arco-design/web-vue')['Tree']
     AUpload: typeof import('@arco-design/web-vue')['Upload']
     AvatarUpload: typeof import('./components/AvatarUpload.vue')['default']
     DarkToggle: typeof import('./components/DarkToggle.vue')['default']

@@ -49,7 +49,13 @@ function formatRowIndex(idx: number) {
   return (current - 1) * pageSize + idx + 1
 }
 
+const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
 function deleteRole({ id, name = '' }: Role) {
+  if (id === unref(user)?.roleId) {
+    Message.error('当前登录用户所属角色不可删除')
+    return
+  }
   const content = name === ''
     ? '确定要删除该角色吗?'
     : `确定要删除角色 (${name}) 吗?`
