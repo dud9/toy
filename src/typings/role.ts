@@ -12,6 +12,10 @@ export interface Role {
    */
   description?: string
   /**
+   * menu ids
+   */
+  menuIdList?: number[]
+  /**
    * createTime
    */
   createTime?: Date
