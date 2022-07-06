@@ -100,7 +100,7 @@ function deleteUser({ id, name = '' }: User) {
     <PageHeader />
     <a-card title="查询用户">
       <template #extra>
-        <a-button type="text" size="small" font-bold>
+        <a-button type="text" size="small" font-bold @click="showUserModal('add')">
           <template #icon>
             <IconPlus />
           </template>

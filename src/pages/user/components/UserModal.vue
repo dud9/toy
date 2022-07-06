@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { IconLock } from '@arco-design/web-vue/es/icon'
 import type { SelectOptionData } from '~/types'
 
 const {
@@ -112,22 +111,14 @@ function handleCancel() {
           v-model="formModel.password"
           placeholder="请输入你的密码..."
           allow-clear
-        >
-          <template #prefix>
-            <icon-lock />
-          </template>
-        </a-input-password>
+        />
       </a-form-item>
       <a-form-item v-if="type === 'add'" field="checkPass" label="确认密码" hide-asterisk feedback>
         <a-input-password
           v-model="formModel.checkPass"
-          placeholder="请输入你的密码..."
+          placeholder="请输入确认密码..."
           allow-clear
-        >
-          <template #prefix>
-            <icon-lock />
-          </template>
-        </a-input-password>
+        />
       </a-form-item>
       <a-form-item
         field="roleId" label="角色" hide-asterisk feedback
