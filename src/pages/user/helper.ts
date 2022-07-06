@@ -21,7 +21,7 @@ export async function saveUserHandler(
       return code === 0
     },
     edit: async () => {
-      const { code } = await UserApi.addUser(data) as any
+      const { code } = await UserApi.updateUser(data) as any
       if (code === 0)
         Message.success('用户更新成功')
 
