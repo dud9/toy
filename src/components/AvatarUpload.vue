@@ -24,12 +24,31 @@ function onChange(_: any, currentFile: any) {
   file.value = {
     ...currentFile,
   }
-
-  emit('update:avatar', file.value.url)
+  getBase64(unref(file).file).then((imageAsDateURL) => {
+    emit('update:avatar', imageAsDateURL)
+  })
 }
 
 function onProgress(currentFile: any) {
   file.value = currentFile
+}
+
+function getBase64(file: any) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    let imageAsDateURL = ''
+    reader.readAsDataURL(file)
+    reader.onload = (data) => {
+      const res: any = data.target || data.srcElement
+      imageAsDateURL = res.result
+    }
+    reader.onerror = (err) => {
+      reject(err)
+    }
+    reader.onloadend = () => {
+      resolve(imageAsDateURL)
+    }
+  })
 }
 </script>
 
