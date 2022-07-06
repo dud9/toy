@@ -1,21 +1,36 @@
 import type { User } from '~/types'
 
-export function saveUserHandler(
+export async function saveUserHandler(
   {
     type = 'add',
-    // data = {},
+    data = {},
   }: {
     type?: 'add' | 'edit'
     data?: User
   },
 ) {
   const map = {
-    add: () => {
-      Message.success('添加成功')
+    add: async () => {
+      const { code } = await UserApi.addUser(data) as any
+      if (code === 0)
+        Message.success('用户添加成功')
+
+      else
+        Message.error('用户添加失败')
+
+      return code === 0
     },
-    edit: () => {
-      Message.success('更新成功')
+    edit: async () => {
+      const { code } = await UserApi.addUser(data) as any
+      if (code === 0)
+        Message.success('用户更新成功')
+
+      else
+        Message.error('用户更新失败')
+
+      return code === 0
     },
   }
-  map[type]()
+
+  return await map[type]()
 }

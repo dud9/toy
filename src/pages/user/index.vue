@@ -63,14 +63,17 @@ function showUserModal(type: 'add' | 'edit', user = {}) {
   selectedUser = user
   userModalVisible = true
 }
-function saveUser(data: Record<string, any>) {
-  saveUserHandler({
+async function saveUser(data: Record<string, any>) {
+  const success = await saveUserHandler({
     type: showUserModalType,
     data,
   })
-  useTimeoutFn(() => {
-    userModalVisible = false
-  }, 500)
+  if (success) {
+    useTimeoutFn(() => {
+      userModalVisible = false
+      onPageChange(pagination.current)
+    }, 500)
+  }
 }
 
 function deleteUser({ id, name = '' }: User) {
