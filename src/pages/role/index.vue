@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IconPlus } from '@arco-design/web-vue/es/icon'
 import RoleSearchForm from './components/RoleSearchForm.vue'
-import type { Pagination } from '~/types'
+import type { Pagination, Role } from '~/types'
 
 const { loading, setLoading } = useLoading()
 let tabledata = $ref([])
@@ -45,6 +45,27 @@ function formartDate(date?: Date) {
 function formatRowIndex(idx: number) {
   const { current, pageSize } = pagination
   return (current - 1) * pageSize + idx + 1
+}
+
+function deleteRole({ id, name = '' }: Role) {
+  const content = name === ''
+    ? '确定要删除该角色吗?'
+    : `确定要删除角色 (${name}) 吗?`
+  Modal.info({
+    title: '删除确认',
+    content,
+    hideCancel: false,
+    onOk: async () => {
+      const { code } = await RoleApi.deleteRoleById({ id }) as any
+      if (code === 0) {
+        Message.success('角色删除成功')
+        onPageChange(pagination.current)
+      }
+      else {
+        Message.error('角色删除失败')
+      }
+    },
+  })
 }
 </script>
 
@@ -112,11 +133,11 @@ function formatRowIndex(idx: number) {
             data-index="operations"
             align="center"
           >
-            <template #cell>
+            <template #cell="{ record }">
               <a-button type="text" size="small" font-bold>
                 编辑
               </a-button>
-              <a-button type="text" size="small" font-bold>
+              <a-button type="text" size="small" font-bold @click="deleteRole(record)">
                 删除
               </a-button>
             </template>
