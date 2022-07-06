@@ -101,7 +101,7 @@ function deleteRole({ id, name = '' }: Role) {
             </template>
           </a-table-column>
           <a-table-column
-            title="名称"
+            title="角色名称"
             data-index="name"
             align="center"
           />
