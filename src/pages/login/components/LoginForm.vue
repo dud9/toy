@@ -22,13 +22,17 @@ async function submit({
   if (errors)
     return
   setLoading(true)
+  const { code, data, message } = await AuthApi.login(values) as any
+  if (code !== 0) {
+    Message.error(message || '账号或密码错误')
+    useTimeoutFn(() => {
+      setLoading(false)
+    }, 500)
+    return
+  }
+
   Message.success('欢迎使用')
-  updateUser({
-    id: 1,
-    username: 'admin',
-    name: 'admin',
-    roleId: 1,
-  })
+  updateUser(data)
   useTimeoutFn(() => {
     router.push('/')
     setLoading(false)
