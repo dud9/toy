@@ -89,6 +89,7 @@ async function fetchMenuTreeData() {
 }
 fetchMenuTreeData()
 
+const router = useRouter()
 let roleModalVisible = $ref(false)
 let showRoleModalType = $ref<'add' | 'edit'>('add')
 let selectedRole = $ref({})
@@ -106,6 +107,11 @@ async function saveRole(data: Record<string, any>) {
     useTimeoutFn(() => {
       roleModalVisible = false
       onPageChange(pagination.current)
+      if (showRoleModalType === 'edit' && unref(user)?.roleId === data.id) {
+        Message.warning('当前角色发生改变, 请重新登录')
+        router.push('/login')
+        useLogout()
+      }
     }, 500)
   }
 }
