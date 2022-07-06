@@ -3,7 +3,7 @@ import { IconPlus } from '@arco-design/web-vue/es/icon'
 import UserModal from './components/UserModal.vue'
 import UserSearchForm from './components/UserSearchForm.vue'
 import { saveUserHandler } from './helper'
-import type { Pagination, Role, SelectOptionData } from '~/types'
+import type { Pagination, Role, SelectOptionData, User } from '~/types'
 
 const { loading, setLoading } = useLoading()
 let tabledata = $ref([])
@@ -71,6 +71,27 @@ function saveUser(data: Record<string, any>) {
   useTimeoutFn(() => {
     userModalVisible = false
   }, 500)
+}
+
+function deleteUser({ id, name = '' }: User) {
+  const content = name === ''
+    ? '确定要删除该用户吗?'
+    : `确定要删除用户 (${name}) 吗?`
+  Modal.info({
+    title: '删除确认',
+    content,
+    hideCancel: false,
+    onOk: async () => {
+      const { code } = await UserApi.deleteUserById({ id }) as any
+      if (code === 0) {
+        Message.success('用户删除成功')
+        onPageChange(pagination.current)
+      }
+      else {
+        Message.error('用户删除失败')
+      }
+    },
+  })
 }
 </script>
 
@@ -151,7 +172,7 @@ function saveUser(data: Record<string, any>) {
               <a-button type="text" size="small" font-bold @click="showUserModal('edit', record)">
                 编辑
               </a-button>
-              <a-button type="text" size="small" font-bold>
+              <a-button type="text" size="small" font-bold @click="deleteUser(record)">
                 删除
               </a-button>
             </template>
