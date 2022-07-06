@@ -18,7 +18,7 @@ function addUrlParams(params?: AnyObject | AnyObject[]) {
 
   const arr = params.flatMap((i: AnyObject) => Object.entries(i))
   for (const [k, v] of arr) {
-    if (v === '')
+    if (v === '' || (Array.isArray(v) && v.length === 0))
       continue
     paramStr += `&${encodeURIComponent(k)}=${encodeURIComponent(v as string)}`
   }

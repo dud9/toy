@@ -20,14 +20,14 @@ function fetchRoleOptions() {
     roleOptions = data.map(i => ({ value: i.id, label: i.name }))
 }
 fetchRoleOptions()
-function fetchTableData(params: Record<string, any>) {
+async function fetchTableData(params: Record<string, any>) {
   params = { ...basePagination, ...params }
   setLoading(true)
   try {
-    const { data } = UserApi.fetchUserList()
-    tabledata = data as any
+    const { data: { records, total } } = await UserApi.fetchUserList(params) as any
+    tabledata = records
     pagination.current = params.current
-    pagination.total = data.length
+    pagination.total = total
   }
   catch (err) {
     // you can report use errorHandler or other
