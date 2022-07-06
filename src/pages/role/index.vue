@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { IconPlus } from '@arco-design/web-vue/es/icon'
+import { IconDriveFile, IconPlus } from '@arco-design/web-vue/es/icon'
 import RoleSearchForm from './components/RoleSearchForm.vue'
-import type { Pagination, Role } from '~/types'
+import RoleModal from './components/RoleModal.vue'
+import { saveRoleHandler } from './helper'
+import type { Menu, Pagination, Role } from '~/types'
 
 const { loading, setLoading } = useLoading()
 let tabledata = $ref([])
@@ -67,6 +69,40 @@ function deleteRole({ id, name = '' }: Role) {
     },
   })
 }
+
+let menuTreeData = $ref()
+async function fetchMenuTreeData() {
+  const { data } = await MenuApi.fetchMenuList() as any
+  menuTreeData = data.map((i: Menu) => {
+    return {
+      key: i.id,
+      title: i.title,
+      icon: () => h(IconDriveFile),
+    }
+  }) || []
+}
+fetchMenuTreeData()
+
+let roleModalVisible = $ref(false)
+let showRoleModalType = $ref<'add' | 'edit'>('add')
+let selectedRole = $ref({})
+function showRoleModal(type: 'add' | 'edit', role = {}) {
+  showRoleModalType = type
+  selectedRole = role
+  roleModalVisible = true
+}
+async function saveRole(data: Record<string, any>) {
+  const success = await saveRoleHandler({
+    type: showRoleModalType,
+    data,
+  })
+  if (success) {
+    useTimeoutFn(() => {
+      roleModalVisible = false
+      onPageChange(pagination.current)
+    }, 500)
+  }
+}
 </script>
 
 <template>
@@ -74,7 +110,7 @@ function deleteRole({ id, name = '' }: Role) {
     <PageHeader />
     <a-card title="查询角色">
       <template #extra>
-        <a-button type="text" size="small" font-bold>
+        <a-button type="text" size="small" font-bold @click="showRoleModal('add')">
           <template #icon>
             <IconPlus />
           </template>
@@ -134,7 +170,7 @@ function deleteRole({ id, name = '' }: Role) {
             align="center"
           >
             <template #cell="{ record }">
-              <a-button type="text" size="small" font-bold>
+              <a-button type="text" size="small" font-bold @click="showRoleModal('edit', record)">
                 编辑
               </a-button>
               <a-button type="text" size="small" font-bold @click="deleteRole(record)">
@@ -145,5 +181,12 @@ function deleteRole({ id, name = '' }: Role) {
         </template>
       </a-table>
     </a-card>
+    <RoleModal
+      v-model:visible="roleModalVisible"
+      :type="showRoleModalType"
+      :role="selectedRole"
+      :menu-tree-data="menuTreeData"
+      @save-role="saveRole"
+    />
   </div>
 </template>
