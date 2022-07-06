@@ -56,7 +56,7 @@ function handleOk() {
     setLoading(true)
     if (type === 'edit')
       formModel.password = undefined
-    emits('saveUser', formModel)
+    emits('saveUser', JSON.parse(JSON.stringify(formModel)))
   })
 }
 function handleCancel() {

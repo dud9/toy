@@ -63,20 +63,30 @@ function showUserModal(type: 'add' | 'edit', user = {}) {
   selectedUser = user
   userModalVisible = true
 }
+const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
 async function saveUser(data: Record<string, any>) {
   const success = await saveUserHandler({
     type: showUserModalType,
     data,
   })
+
   if (success) {
     useTimeoutFn(() => {
       userModalVisible = false
       onPageChange(pagination.current)
     }, 500)
+
+    if (showUserModalType === 'edit' && unref(user)?.id === data.id)
+      userStore.updateUser(data)
   }
 }
 
 function deleteUser({ id, name = '' }: User) {
+  if (id === unref(user)?.id) {
+    Message.error('当前登录用户账号不可删除')
+    return
+  }
   const content = name === ''
     ? '确定要删除该用户吗?'
     : `确定要删除用户 (${name}) 吗?`
