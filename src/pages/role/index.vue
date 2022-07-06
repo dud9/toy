@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { IconPlus } from '@arco-design/web-vue/es/icon'
 import RoleSearchForm from './components/RoleSearchForm.vue'
 import type { Pagination } from '~/types'
 
@@ -53,6 +54,9 @@ function formatRowIndex(idx: number) {
     <a-card title="查询角色">
       <template #extra>
         <a-button type="text" size="small" font-bold>
+          <template #icon>
+            <IconPlus />
+          </template>
           添加
         </a-button>
       </template>

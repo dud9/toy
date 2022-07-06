@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { IconPlus } from '@arco-design/web-vue/es/icon'
 import UserModal from './components/UserModal.vue'
 import UserSearchForm from './components/UserSearchForm.vue'
 import { saveUserHandler } from './helper'
@@ -79,6 +80,9 @@ function saveUser(data: Record<string, any>) {
     <a-card title="查询用户">
       <template #extra>
         <a-button type="text" size="small" font-bold>
+          <template #icon>
+            <IconPlus />
+          </template>
           添加
         </a-button>
       </template>
