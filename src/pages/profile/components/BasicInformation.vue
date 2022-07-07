@@ -30,7 +30,7 @@ function resetFormModel() {
 watch(() => tabIdx, resetFormModel)
 
 async function onSubmit() {
-  const { id, username, name } = unref(formModel)
+  const { id, username, name } = JSON.parse(JSON.stringify(unref(formModel)))
   const { code } = await UserApi.updateUser({
     id,
     username,
