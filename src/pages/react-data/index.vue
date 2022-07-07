@@ -6,7 +6,7 @@
     <PageHeader />
     <div
       w-full ha min-h-500px flex-inline flex-nowrap
-      border="1 slate-800/10 dark:![var(--color-neutral-3)]"
+      border="1 neutral-600/10 dark:![var(--color-neutral-3)]"
     >
       <a-resize-box
         :directions="['right']"
