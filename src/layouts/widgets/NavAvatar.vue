@@ -11,7 +11,7 @@ function onSelect(value: any) {
   const actionMap: Record<string, any> = {
     0: () => router.push('/profile'),
     1: () => useOpenWindow('https://github.com/dud9/toy'),
-    2: () => useOpenWindow('https://github.com/dud9/toy'),
+    2: () => useOpenWindow('http://localhost:8004/swagger-ui.html'),
     3: logout,
   }
   const action = actionMap[value]
@@ -37,7 +37,7 @@ const avatar = computed(() => {
           Github
         </a-doption>
         <a-doption value="2">
-          文档
+          接口文档
         </a-doption>
         <a-doption value="3">
           <template #icon>
