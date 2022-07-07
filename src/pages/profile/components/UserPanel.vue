@@ -110,9 +110,9 @@ function beforeUpload(file: any): any {
         @before-upload="beforeUpload"
       >
         <template #upload-button>
-          <a-avatar :size="100" class="info-avatar">
+          <a-avatar :size="100" class="info-avatar" trigger-type="mask">
             <template #trigger-icon>
-              <IconCamera />
+              <IconCamera text-24px />
             </template>
             <img v-if="file" :src="file.url">
           </a-avatar>
@@ -149,16 +149,3 @@ function beforeUpload(file: any): any {
   </a-card>
 </template>
 
-<style scoped>
-  :deep(.arco-avatar-trigger-icon-button) {
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
-    opacity: 0.8;
-  }
-  :deep(.arco-avatar-trigger-icon-button .arco-icon-camera) {
-    margin-top: 8px;
-    color: rgb(var(--arcoblue-6));
-    font-size: 14px;
-  }
-</style>

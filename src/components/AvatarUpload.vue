@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconEdit, IconEye, IconPlus } from '@arco-design/web-vue/es/icon'
+import { IconCamera, IconEye, IconPlus } from '@arco-design/web-vue/es/icon'
 
 const {
   avatar = undefined,
@@ -82,7 +82,7 @@ function beforeUpload(file: any): any {
           >
             <img :src="file.url" rounded-full>
             <div class="arco-upload-list-picture-mask" rounded-full>
-              <IconEdit />
+              <IconCamera />
             </div>
             <a-progress
               v-if="file.status === 'uploading' && file.percent < 100"
