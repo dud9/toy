@@ -4,4 +4,9 @@
  * we do not need to import them.
  */
 import dayJs from 'dayjs'
-export { dayJs }
+import * as echarts from 'echarts'
+
+export {
+  dayJs,
+  echarts,
+}

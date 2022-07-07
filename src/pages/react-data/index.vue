@@ -1,27 +1,31 @@
 <script setup lang="ts">
+import ReactDataChart from './components/ReactDataChart.vue'
+
+const { width, height } = useWindowSize()
+const leftSideWidth = ref(unref(width) * 0.7)
+watch([leftSideWidth, height], (val) => {
+  // console.log(val, width.value)
+  // console.log(val)
+})
 </script>
 
 <template>
   <div>
     <PageHeader />
     <div
-      w-full ha min-h-500px flex-inline flex-nowrap
+      style="height: calc(100vh - 140px);"
+      w-full flex="inline nowrap" lt-md="grid grid-rows-2"
       border="1 neutral-600/10 dark:![var(--color-neutral-3)]"
     >
       <a-resize-box
+        v-model:width="leftSideWidth"
         :directions="['right']"
-        :style="{ width: '70%', minWidth: '50%', maxWidth: '100%', textAlign: 'center' }"
+        :style="{ minWidth: '50%', maxWidth: '100%', textAlign: 'center' }"
+        lt-md="!w-full"
       >
-        <a-typography-paragraph>We are building the future of content discovery and creation.</a-typography-paragraph>
-        <a-divider />
-        <a-typography-paragraph>
-          ByteDance's content platforms enable people to enjoy content powered by AI technology. We
-          inform, entertain, and inspire people across language, culture and geography.
-        </a-typography-paragraph>
-        <a-divider>ByteDance</a-divider>
-        <a-typography-paragraph>Yiming Zhang is the founder and CEO of ByteDance.</a-typography-paragraph>
+        <ReactDataChart :wrapper-width="leftSideWidth" :wrapper-height="height" />
       </a-resize-box>
-      <div>
+      <div lt-md="mt-20px !w-full" border="1 red" of="x-hidden y-auto" w-auto>
         <h1 />
       </div>
     </div>
