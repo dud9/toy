@@ -25,6 +25,7 @@ function resetFormModel() {
   formModel = {
     ...baseFormModel,
   }
+  refForm.value && refForm.value.clearValidate()
 }
 
 watch(() => tabIdx, resetFormModel)
@@ -117,7 +118,7 @@ function validatePassword() {
         type="primary"
         @click="onSubmit"
       >
-        更新信息
+        更新密码
       </a-button>
       <a-button
         font-bold

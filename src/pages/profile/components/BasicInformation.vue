@@ -25,6 +25,7 @@ function getBaseFormModel() {
 let formModel = $ref<Record<string, any>>(getBaseFormModel())
 function resetFormModel() {
   formModel = getBaseFormModel()
+  refForm.value && refForm.value.clearValidate()
 }
 
 watch(() => tabIdx, resetFormModel)
