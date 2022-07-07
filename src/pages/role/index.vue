@@ -107,13 +107,36 @@ async function saveRole(data: Record<string, any>) {
     useTimeoutFn(() => {
       roleModalVisible = false
       onPageChange(pagination.current)
-      if (showRoleModalType === 'edit' && unref(user)?.roleId === data.id) {
-        Message.warning('当前角色发生改变, 请重新登录')
+      if (
+        showRoleModalType === 'edit'
+      && unref(user)?.roleId === data.id
+      && checkRoleMenuListChanged(data)
+      ) {
+        Message.warning('当前角色权限发生改变, 请重新登录')
         router.push('/login')
         useLogout()
       }
     }, 500)
   }
+}
+
+const permissionStore = usePermissionStore()
+function checkRoleMenuListChanged(newRole: Role) {
+  const originMenuIdList = permissionStore.appMenus.map(i => i.id)
+  if (originMenuIdList.length !== newRole.menuIdList!.length)
+    return true
+  let changed = false
+  let idx = 0
+  const checkList = newRole.menuIdList!
+  while (!changed && idx < checkList.length) {
+    if (!originMenuIdList.includes(checkList[idx])) {
+      changed = true
+      break
+    }
+
+    idx++
+  }
+  return changed
 }
 </script>
 
