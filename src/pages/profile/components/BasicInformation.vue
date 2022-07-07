@@ -29,22 +29,26 @@ function resetFormModel() {
 
 watch(() => tabIdx, resetFormModel)
 
-async function onSubmit() {
-  const { id, username, name } = JSON.parse(JSON.stringify(unref(formModel)))
-  const { code } = await UserApi.updateUser({
-    id,
-    username,
-    name,
-  }) as any
-  if (code !== 0) {
-    Message.error('信息更新失败')
-    return
-  }
-  Message.success('信息更新成功')
-  const userClone = JSON.parse(JSON.stringify(unref(user)))
-  userStore.updateUser({
-    ...userClone,
-    name,
+function onSubmit() {
+  refForm.value.validate(async (errors: any) => {
+    if (errors)
+      return
+    const { id, username, name } = JSON.parse(JSON.stringify(unref(formModel)))
+    const { code } = await UserApi.updateUser({
+      id,
+      username,
+      name,
+    }) as any
+    if (code !== 0) {
+      Message.error('信息更新失败')
+      return
+    }
+    Message.success('信息更新成功')
+    const userClone = JSON.parse(JSON.stringify(unref(user)))
+    userStore.updateUser({
+      ...userClone,
+      name,
+    })
   })
 }
 </script>

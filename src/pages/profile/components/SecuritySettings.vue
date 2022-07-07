@@ -6,7 +6,7 @@ const {
 }>()
 
 const refForm = ref()
-const validateTrigger = ref<('change' | 'input' | 'focus' | 'blur')[]>(['change', 'input'])
+const validateTrigger = ref<('change' | 'input' | 'focus' | 'blur')[]>(['change', 'input', 'focus'])
 
 const { user } = storeToRefs(useUserStore())
 
@@ -30,22 +30,26 @@ function resetFormModel() {
 watch(() => tabIdx, resetFormModel)
 
 const router = useRouter()
-async function onSubmit() {
-  const { id, password, newPass } = JSON.parse(JSON.stringify(unref(formModel)))
-  const { code, message } = await AuthApi.updatePassword({
-    id,
-    password,
-    newPass,
-  }) as any
-  if (code !== 0) {
-    Message.error(message || '密码修改失败')
-    return
-  }
-  Message.success('密码修改成功, 请重新登录')
-  useTimeoutFn(() => {
-    router.push('/login')
-    useLogout()
-  }, 1000)
+function onSubmit() {
+  refForm.value.validate(async (errors: any) => {
+    if (errors)
+      return
+    const { id, password, newPass } = JSON.parse(JSON.stringify(unref(formModel)))
+    const { code, message } = await AuthApi.updatePassword({
+      id,
+      password,
+      newPass,
+    }) as any
+    if (code !== 0) {
+      Message.error(message || '密码修改失败')
+      return
+    }
+    Message.success('密码修改成功, 请重新登录')
+    useTimeoutFn(() => {
+      router.push('/login')
+      useLogout()
+    }, 1000)
+  })
 }
 function validatePassword() {
   return {
