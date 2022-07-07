@@ -22,12 +22,12 @@ const iconMap: Record<string, string> = {
 <template>
   <div
     class="wrap" shadow-md
-    flex="~ col" text="5.3rem" py-4
+    flex="~ col" text="5.3rem" py-4 justify-center items-center
     hover="!translate-y-[-4px]" duration-300
     :class="{
       '!bg-[rgb(var(--primary-1))] dark:!bg-[rgb(35,35,36)]': menuInverted,
       'border-1 !border-[var(--color-neutral-3)]': !menuInverted,
-      '!w-full !min-h-180px !rounded-lg': menuShape === 'square',
+      '!w-full !min-h-180px !max-h-250px !rounded-lg': menuShape === 'square',
       '!w-210px !h-210px !rounded-full mx-auto': menuShape === 'round',
     }"
   >
