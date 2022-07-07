@@ -104,7 +104,7 @@ watch(isDark, (val) => {
       </a-button>
     </div>
     <div w-full h-full flex justify-center items-center>
-      <div ref="refChart" class="!w-full h-full" />
+      <div ref="refChart" class="!w-full !h-full" />
     </div>
   </div>
 </template>
