@@ -14,4 +14,8 @@ export class UserApi {
   static updateUser(params: Record<string, any>) {
     return useRequest.put('/userApi/user', { body: params })
   }
+
+  static updateAvatar(params: Record<string, any>) {
+    return useRequest.post('/userApi/avatar', { body: params })
+  }
 }
