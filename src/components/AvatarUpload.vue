@@ -29,10 +29,6 @@ function onChange(_: any, currentFile: any) {
   })
 }
 
-function onProgress(currentFile: any) {
-  file.value = currentFile
-}
-
 function getBase64(file: any) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
@@ -60,7 +56,6 @@ function getBase64(file: any) {
       :auto-upload="false"
       :image-preview="true"
       @change="onChange"
-      @progress="onProgress"
     >
       <template #upload-button>
         <div
