@@ -26,7 +26,7 @@ watch([leftSideWidth, height], (val) => {
       >
         <ReactDataChart :wrapper-width="leftSideWidth" :wrapper-height="height" />
       </a-resize-box>
-      <div lt-md="mt-20px !w-full" border="1 red" of="x-hidden y-auto" flex-1>
+      <div lt-md="mt-20px !w-full" of="x-hidden y-auto" flex-1>
         <ReactDataList />
       </div>
     </div>
