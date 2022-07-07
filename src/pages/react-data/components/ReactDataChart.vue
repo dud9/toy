@@ -60,6 +60,23 @@ function resizeChart() {
 }
 const debouncedResizeChart = useDebounceFn(resizeChart, 500, { maxWait: 3000 })
 watch([() => wrapperWidth, () => wrapperHeight], debouncedResizeChart)
+
+watch(isDark, (val) => {
+  reactChart.setOption<EChartsOption>({
+    legend: {
+      textStyle: {
+        color: val ? '#fff' : '#333',
+      },
+    },
+    tooltip: {
+      backgroundColor: unref(isDark) ? '#232324' : '#fff',
+      borderColor: unref(isDark) ? '#232324' : '#fff',
+      textStyle: {
+        color: unref(isDark) ? '#fff' : '#333',
+      },
+    },
+  })
+})
 </script>
 
 <template>

@@ -34,8 +34,16 @@ export const defaultOption: EChartsOption = {
   },
   legend: {
     show: true,
+    textStyle: {
+      color: unref(isDark) ? '#fff' : '#333',
+    },
   },
   tooltip: {
+    backgroundColor: unref(isDark) ? '#232324' : '#fff',
+    borderColor: unref(isDark) ? '#232324' : '#fff',
+    textStyle: {
+      color: unref(isDark) ? '#fff' : '#333',
+    },
     trigger: 'axis',
     formatter(params: any) {
       params = params[0]
