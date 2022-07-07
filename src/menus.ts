@@ -1,5 +1,10 @@
 import type { Menu } from './types'
 
+/**
+ * the source of app menus
+ */
+export const menuSource: 'front' | 'back' = 'back'
+
 export const menus: Menu[] = [
   {
     id: 101,
