@@ -23,7 +23,6 @@ declare module '@vue/runtime-core' {
     ALayout: typeof import('@arco-design/web-vue')['Layout']
     ALayoutContent: typeof import('@arco-design/web-vue')['LayoutContent']
     ALayoutHeader: typeof import('@arco-design/web-vue')['LayoutHeader']
-    AProgress: typeof import('@arco-design/web-vue')['Progress']
     ARadio: typeof import('@arco-design/web-vue')['Radio']
     ARadioGroup: typeof import('@arco-design/web-vue')['RadioGroup']
     ARow: typeof import('@arco-design/web-vue')['Row']
