@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ReactDataChart from './components/ReactDataChart.vue'
+import ReactDataList from './components/ReactDataList.vue'
 
 const { width, height } = useWindowSize()
 const leftSideWidth = ref(unref(width) * 0.7)
@@ -25,8 +26,8 @@ watch([leftSideWidth, height], (val) => {
       >
         <ReactDataChart :wrapper-width="leftSideWidth" :wrapper-height="height" />
       </a-resize-box>
-      <div lt-md="mt-20px !w-full" border="1 red" of="x-hidden y-auto" w-auto>
-        <h1 />
+      <div lt-md="mt-20px !w-full" border="1 red" of="x-hidden y-auto" flex-1>
+        <ReactDataList />
       </div>
     </div>
   </div>
