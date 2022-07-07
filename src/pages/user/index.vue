@@ -63,6 +63,8 @@ function showUserModal(type: 'add' | 'edit', user = {}) {
   selectedUser = user
   userModalVisible = true
 }
+
+const router = useRouter()
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
 async function saveUser(data: Record<string, any>) {
@@ -75,8 +77,16 @@ async function saveUser(data: Record<string, any>) {
     useTimeoutFn(() => {
       userModalVisible = false
       onPageChange(pagination.current)
-      if (showUserModalType === 'edit' && unref(user)?.id === data.id)
-        userStore.updateUser(data)
+      if (showUserModalType === 'edit' && unref(user)?.id === data.id) {
+        if (unref(user)?.roleId === data.roleId) {
+          userStore.updateUser(data)
+        }
+        else {
+          Message.warning('当前账号角色发生改变, 请重新登录')
+          router.push('/login')
+          useLogout()
+        }
+      }
     }, 500)
   }
 }
