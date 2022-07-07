@@ -85,6 +85,16 @@ const data = computed(() => {
     ? _data.slice(0, 2)
     : _data
 })
+
+function beforeUpload(file: any): any {
+  return new Promise((resolve) => {
+    if (!file.type.startsWith('image')) {
+      Message.error('请上传图片')
+      return resolve(false)
+    }
+    resolve(true)
+  })
+}
 </script>
 
 <template>
@@ -97,6 +107,7 @@ const data = computed(() => {
         :show-file-list="false"
         :image-preview="true"
         @change="onChange"
+        @before-upload="beforeUpload"
       >
         <template #upload-button>
           <a-avatar :size="100" class="info-avatar">

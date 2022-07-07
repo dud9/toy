@@ -46,6 +46,16 @@ function getBase64(file: any) {
     }
   })
 }
+
+function beforeUpload(file: any): any {
+  return new Promise((resolve) => {
+    if (!file.type.startsWith('image')) {
+      Message.error('请上传图片')
+      return resolve(false)
+    }
+    resolve(true)
+  })
+}
 </script>
 
 <template>
@@ -56,6 +66,7 @@ function getBase64(file: any) {
       :auto-upload="false"
       :image-preview="true"
       @change="onChange"
+      @before-upload="beforeUpload"
     >
       <template #upload-button>
         <div
