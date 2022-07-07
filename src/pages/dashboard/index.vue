@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import MenuItem from './components/MenuItem.vue'
 
+const { user } = storeToRefs(useUserStore())
 const permissionStore = usePermissionStore()
 const { appMenus } = storeToRefs(permissionStore)
 function queryMenus() {
   if (unref(appMenus).length === 0)
-    permissionStore.fetchAppMenus()
+    permissionStore.fetchAppMenus(unref(user)?.roleId)
 }
 queryMenus()
 const equipName = '数控拼焊'
