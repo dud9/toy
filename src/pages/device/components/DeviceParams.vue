@@ -19,6 +19,22 @@ async function getEquipmentInfo() {
   }
 }
 getEquipmentInfo()
+
+const refNumberTable = ref()
+const refNumberStatus = ref()
+
+function save() {
+  if (activeRadioValue.value === 'number') {
+    if (!refNumberTable.value)
+      return
+    refNumberTable.value.saveChanged()
+  }
+  else {
+    // if (!refNumberStatus.value)
+    //   return
+    // refNumberStatus.value.saveChanged()
+  }
+}
 </script>
 
 <template>
@@ -36,7 +52,7 @@ getEquipmentInfo()
         <a-button type="primary" font-bold>
           发布配置
         </a-button>
-        <a-button font-bold text="![rgb(var(--primary-6))]" ml-3>
+        <a-button font-bold text="![rgb(var(--primary-6))]" ml-3 @click="save">
           <template #icon>
             <IconDriveFile />
           </template>
@@ -46,13 +62,13 @@ getEquipmentInfo()
           <template #icon>
             <IconRefresh />
           </template>
-          重置
+          还原
         </a-button>
       </div>
     </div>
     <div mt-15px>
-      <DeviceParamsTableNumber v-if="equipment && activeRadioValue === 'number'" :equipment="equipment" />
-      <DeviceParamsTableStatus v-if="equipment && activeRadioValue === 'status'" :equipment="equipment" />
+      <DeviceParamsTableNumber v-if="equipment && activeRadioValue === 'number'" ref="refNumberTable" :equipment="equipment" />
+      <DeviceParamsTableStatus v-if="equipment && activeRadioValue === 'status'" ref="refNumberStatus" :equipment="equipment" />
       <a-empty v-if="!equipment" w-full h-auto min-h-250px flex="~ col" justify-center items-center>
         <template #image>
           <IconExclamationCircleFill :size="80" />
