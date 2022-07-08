@@ -9,7 +9,7 @@ export default {
       name: 'Device',
       component: () => import('~/pages/device/index.vue'),
       meta: {
-        title: '设备管理',
+        title: '设备配置',
         requiresAuth: true,
         cached: false,
       },

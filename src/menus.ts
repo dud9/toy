@@ -37,7 +37,7 @@ export const menus: Menu[] = [
   },
   {
     id: 106,
-    title: '设备管理',
+    title: '设备配置',
     icon: 'device',
     path: '/device',
   },
