@@ -49,3 +49,8 @@ export const baseSettings = reactive<Record<string, any>>({
  * @default: 'auto'
  */
 export const themeMode: 'dark' | 'light' | 'auto' = 'auto'
+
+/**
+ * the ip of equip
+ */
+export const equipIp = ''
