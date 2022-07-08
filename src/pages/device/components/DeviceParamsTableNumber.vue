@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { } from '../helper'
-import type { Pagination } from '~/types'
+import type { Equipment, Pagination } from '~/types'
+import { CollectApi } from '~/server/api/collect'
+
+const {
+  equipment = {},
+} = defineProps<{
+  equipment?: Equipment
+}>()
 
 const { loading, setLoading } = useLoading()
 let tabledata = $ref([])
@@ -11,11 +18,16 @@ const basePagination: Pagination = {
 const pagination = reactive({
   ...basePagination,
 })
-async function fetchRoleData(params: Record<string, any>) {
-  params = { ...basePagination, ...params }
+
+async function fetchCollectNumberItemData(params: Record<string, any>) {
+  if (!equipment || !equipment.id) {
+    Message.error('设备不存在')
+    return
+  }
+  params = { ...basePagination, ...params, equipmentId: equipment.id }
   setLoading(true)
   try {
-    const { data: { records, total } } = await RoleApi.fetchRoleList(params) as any
+    const { data: { records, total } } = await CollectApi.fetchCollectNumberItems(params) as any
     tabledata = records as any
     pagination.current = params.current
     pagination.total = total
@@ -29,12 +41,10 @@ async function fetchRoleData(params: Record<string, any>) {
     }, 1000)
   }
 }
-const refSearchForm = ref()
+fetchCollectNumberItemData({})
+
 function onPageChange(current: number) {
-  if (!refSearchForm.value)
-    return
-  const params = refSearchForm.value.formModel
-  fetchRoleData({ ...params, ...basePagination, current })
+  fetchCollectNumberItemData({ ...basePagination, current })
 }
 function formatRowIndex(idx: number) {
   const { current, pageSize } = pagination

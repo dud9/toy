@@ -1,8 +1,24 @@
 <script setup lang="ts">
-import { IconDriveFile, IconRefresh } from '@arco-design/web-vue/es/icon'
+import { IconDriveFile, IconExclamationCircleFill, IconRefresh } from '@arco-design/web-vue/es/icon'
 import DeviceParamsTableNumber from './DeviceParamsTableNumber.vue'
+import DeviceParamsTableStatus from './DeviceParamsTableStatus.vue'
+import type { Equipment } from '~/types'
 
 const activeRadioValue = ref<'number' | 'status'>('number')
+
+const { equipIp } = useAppStore()
+let equipment = $ref<Equipment>()
+async function getEquipmentInfo() {
+  const { code, data, message } = await EquipmentApi.fetchEquipmentByIp({ ip: equipIp }) as any
+  if (code !== 0) {
+    Message.error(message || '设备不存在')
+    return
+  }
+  equipment = {
+    ...data,
+  }
+}
+getEquipmentInfo()
 </script>
 
 <template>
@@ -35,7 +51,16 @@ const activeRadioValue = ref<'number' | 'status'>('number')
       </div>
     </div>
     <div mt-15px>
-      <DeviceParamsTableNumber v-if="activeRadioValue === 'number'" />
+      <DeviceParamsTableNumber v-if="equipment && activeRadioValue === 'number'" :equipment="equipment" />
+      <DeviceParamsTableStatus v-if="equipment && activeRadioValue === 'status'" :equipment="equipment" />
+      <a-empty v-if="!equipment" w-full h-auto min-h-250px flex="~ col" justify-center items-center>
+        <template #image>
+          <IconExclamationCircleFill :size="80" />
+        </template>
+        <div text-30px font-bold mt-30px>
+          设备不存在
+        </div>
+      </a-empty>
     </div>
   </div>
 </template>

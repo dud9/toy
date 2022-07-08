@@ -2,12 +2,6 @@
 import { EquipmentApi } from '~/server/api/equipment'
 import type { Equipment } from '~/types'
 
-const {
-  tabIdx = 1,
-} = defineProps<{
-  tabIdx?: number
-}>()
-
 const dayjs = dayJs
 const { equipIp } = useAppStore()
 
@@ -40,14 +34,13 @@ async function getFormModel() {
     ...data,
   }
 }
+
 getFormModel()
 
 async function resetFormModel() {
   getFormModel()
   refForm.value && refForm.value.clearValidate()
 }
-
-watch(() => tabIdx, resetFormModel)
 
 function onSubmit() {
   refForm.value.validate(async (errors: any) => {
