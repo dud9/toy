@@ -8,6 +8,9 @@ watch([leftSideWidth, height], (val) => {
   // console.log(val, width.value)
   // console.log(val)
 })
+watch(width, (val) => {
+  leftSideWidth.value = val * 0.7
+})
 </script>
 
 <template>

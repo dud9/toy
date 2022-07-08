@@ -27,6 +27,8 @@ declare module '@vue/runtime-core' {
     ASpace: typeof import('@arco-design/web-vue')['Space']
     ASpin: typeof import('@arco-design/web-vue')['Spin']
     ASwitch: typeof import('@arco-design/web-vue')['Switch']
+    ATooltip: typeof import('@arco-design/web-vue')['Tooltip']
+    ATypographyParagraph: typeof import('@arco-design/web-vue')['TypographyParagraph']
     AvatarUpload: typeof import('./components/AvatarUpload.vue')['default']
     DarkToggle: typeof import('./components/DarkToggle.vue')['default']
     PageHeader: typeof import('./components/PageHeader.vue')['default']
