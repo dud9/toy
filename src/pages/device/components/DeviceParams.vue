@@ -17,16 +17,19 @@ const activeRadioValue = ref<'number' | 'status'>('number')
       </a-radio-group>
       <div>
         <a-button type="primary" font-bold>
-          <template #icon>
-            <IconRefresh />
-          </template>
-          重启
+          发布配置
         </a-button>
-        <a-button font-bold text="![rgb(var(--primary-6))]" ml-4>
+        <a-button font-bold text="![rgb(var(--primary-6))]" ml-3>
           <template #icon>
             <IconDriveFile />
           </template>
           保存
+        </a-button>
+        <a-button font-bold ml-3>
+          <template #icon>
+            <IconRefresh />
+          </template>
+          重置
         </a-button>
       </div>
     </div>
