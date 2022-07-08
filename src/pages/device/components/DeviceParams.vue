@@ -1,114 +1,34 @@
 <script setup lang="ts">
-import type { Pagination } from '~/types'
+import { IconDriveFile, IconRefresh } from '@arco-design/web-vue/es/icon'
 
-const { loading, setLoading } = useLoading()
-let tabledata = $ref([])
-const basePagination: Pagination = {
-  current: 1,
-  pageSize: 10,
-}
-const pagination = reactive({
-  ...basePagination,
-})
-async function fetchRoleData(params: Record<string, any>) {
-  params = { ...basePagination, ...params }
-  setLoading(true)
-  try {
-    const { data: { records, total } } = await RoleApi.fetchRoleList(params) as any
-    tabledata = records as any
-    pagination.current = params.current
-    pagination.total = total
-  }
-  catch (err) {
-    // you can report use errorHandler or other
-  }
-  finally {
-    useTimeoutFn(() => {
-      setLoading(false)
-    }, 1000)
-  }
-}
-const refSearchForm = ref()
-function onPageChange(current: number) {
-  if (!refSearchForm.value)
-    return
-  const params = refSearchForm.value.formModel
-  fetchRoleData({ ...params, ...basePagination, current })
-}
-function formartDate(date?: Date) {
-  return date
-    ? dayJs(date).format('YYYY-MM-DD HH:mm:ss')
-    : ''
-}
-function formatRowIndex(idx: number) {
-  const { current, pageSize } = pagination
-  return (current - 1) * pageSize + idx + 1
-}
+const activeRadioValue = ref<'number' | 'status'>('number')
 </script>
 
 <template>
-  <div px-15px mb-20px>
-    <a-table
-      row-key="id"
-      :loading="loading"
-      :data="tabledata"
-      :bordered="false"
-      :pagination="tabledata.length > pagination.pageSize ? pagination : false"
-      @page-change="onPageChange"
-    >
-      <template #columns>
-        <a-table-column
-          title="序号"
-          data-index="number"
-          align="center"
-        >
-          <template #cell="{ rowIndex }">
-            {{ formatRowIndex(rowIndex) }}
+  <div px-15px mb-20px w-full>
+    <div flex justify-between items-center>
+      <a-radio-group v-model="activeRadioValue" type="button">
+        <a-radio value="number">
+          数值型
+        </a-radio>
+        <a-radio value="status">
+          状态型
+        </a-radio>
+      </a-radio-group>
+      <div>
+        <a-button type="primary" font-bold>
+          <template #icon>
+            <IconRefresh />
           </template>
-        </a-table-column>
-        <a-table-column
-          title="角色名称"
-          data-index="name"
-          align="center"
-        />
-        <a-table-column
-          title="角色描述"
-          data-index="description"
-          align="center"
-        />
-        <a-table-column
-          title="创建时间"
-          data-index="createTime"
-          align="center"
-        >
-          <template #cell="{ record }">
-            {{ formartDate(record.createTime) }}
+          重启
+        </a-button>
+        <a-button font-bold text="![rgb(var(--primary-6))]" ml-4>
+          <template #icon>
+            <IconDriveFile />
           </template>
-        </a-table-column>
-        <a-table-column
-          title="修改时间"
-          data-index="updateTime"
-          align="center"
-        >
-          <template #cell="{ record }">
-            {{ formartDate(record.updateTime) }}
-          </template>
-        </a-table-column>
-        <a-table-column
-          title="操作"
-          data-index="operations"
-          align="center"
-        >
-          <template #cell="{ record }">
-            <a-button type="text" size="small" font-bold>
-              编辑
-            </a-button>
-            <a-button type="text" size="small" font-bold>
-              删除
-            </a-button>
-          </template>
-        </a-table-column>
-      </template>
-    </a-table>
+          保存
+        </a-button>
+      </div>
+    </div>
   </div>
 </template>

@@ -8,6 +8,7 @@ const {
   tabIdx?: number
 }>()
 
+const dayjs = dayJs
 const { equipIp } = useAppStore()
 
 const refForm = ref()
@@ -52,17 +53,16 @@ function onSubmit() {
   refForm.value.validate(async (errors: any) => {
     if (errors)
       return
-    const { id, username, name } = JSON.parse(JSON.stringify(unref(formModel)))
-    const { code } = await UserApi.updateUser({
-      id,
-      username,
-      name,
+    const cloneData = JSON.parse(JSON.stringify(unref(formModel)))
+    const { code } = await EquipmentApi.updateEquipmentInformation({
+      ...cloneData,
     }) as any
     if (code !== 0) {
       Message.error('设备信息配置失败')
       return
     }
     Message.success('设备信息配置成功')
+    resetFormModel()
   })
 }
 </script>
@@ -102,10 +102,11 @@ function onSubmit() {
       ]"
       :validate-trigger="validateTrigger"
     >
-      <a-input
+      <a-date-picker
         v-model="formModel.productionDate"
         placeholder="请输入出厂时间..."
-        allow-clear
+        allow-clear w-full
+        :disabled-date="(current: any) => dayjs(current).isAfter(dayjs())"
       />
     </a-form-item>
     <a-form-item
@@ -141,10 +142,10 @@ function onSubmit() {
       ]"
       :validate-trigger="validateTrigger"
     >
-      <a-input
+      <a-input-number
         v-model="formModel.port"
         placeholder="请输入设备端口号..."
-        allow-clear
+        allow-clear :min="0" w-full
       />
     </a-form-item>
     <a-form-item
@@ -154,10 +155,10 @@ function onSubmit() {
       ]"
       :validate-trigger="validateTrigger"
     >
-      <a-input
+      <a-input-number
         v-model="formModel.collectInterval"
         placeholder="请输入采集间隔(毫秒)..."
-        allow-clear
+        allow-clear :min="0" w-full
       />
     </a-form-item>
     <div m="x-auto y-20px">
