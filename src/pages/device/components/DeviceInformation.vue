@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { EquipmentApi } from '~/server/api/equipment'
+import type { Equipment } from '~/types'
 
 const {
   tabIdx = 1,
@@ -12,20 +13,36 @@ const { equipIp } = useAppStore()
 const refForm = ref()
 const validateTrigger = ref<('change' | 'input' | 'focus' | 'blur')[]>(['change', 'input'])
 
-async function getBaseFormModel() {
+const baseFormModel: Equipment = {
+  id: undefined,
+  name: '',
+  type: '',
+  productionDate: undefined,
+  information: '',
+  ip: '',
+  port: undefined,
+  collectInterval: undefined,
+}
+
+let formModel = $ref<Equipment>({
+  ...baseFormModel,
+})
+async function getFormModel() {
   const { code, data, message } = await EquipmentApi.fetchEquipmentByIp({ ip: equipIp }) as any
   if (code !== 0) {
     Message.error(message || '设备不存在')
-    return {}
+    formModel = {
+      ...baseFormModel,
+    }
   }
-  return {
+  formModel = {
     ...data,
   }
 }
+getFormModel()
 
-let formModel = $ref<Record<string, any>>(getBaseFormModel())
 async function resetFormModel() {
-  formModel = await getBaseFormModel()
+  getFormModel()
   refForm.value && refForm.value.clearValidate()
 }
 
