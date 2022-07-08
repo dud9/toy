@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { IconDriveFile, IconRefresh } from '@arco-design/web-vue/es/icon'
+import DeviceParamsTableNumber from './DeviceParamsTableNumber.vue'
 
 const activeRadioValue = ref<'number' | 'status'>('number')
 </script>
@@ -32,6 +33,9 @@ const activeRadioValue = ref<'number' | 'status'>('number')
           重置
         </a-button>
       </div>
+    </div>
+    <div mt-15px>
+      <DeviceParamsTableNumber v-if="activeRadioValue === 'number'" />
     </div>
   </div>
 </template>

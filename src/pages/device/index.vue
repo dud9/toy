@@ -3,7 +3,7 @@ import { IconBug, IconInfoCircle } from '@arco-design/web-vue/es/icon'
 import DeviceInformation from './components/DeviceInformation.vue'
 import DeviceParams from './components/DeviceParams.vue'
 
-const activeTabIdx = ref(1)
+const activeTabIdx = ref(2)
 function changeTabIdx(key: any) {
   activeTabIdx.value = key
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formartDate } from '../helper'
+import { } from '../helper'
 import type { Pagination } from '~/types'
 
 const { loading, setLoading } = useLoading()
@@ -48,7 +48,7 @@ function formatRowIndex(idx: number) {
     :loading="loading"
     :data="tabledata"
     :bordered="false"
-    :pagination="tabledata.length > pagination.pageSize ? pagination : false"
+    :pagination="pagination.total! > pagination.pageSize ? pagination : false"
     @page-change="onPageChange"
   >
     <template #columns>
@@ -62,45 +62,68 @@ function formatRowIndex(idx: number) {
         </template>
       </a-table-column>
       <a-table-column
-        title="角色名称"
-        data-index="name"
+        title="采集项名称"
+        data-index="paramName"
         align="center"
       />
       <a-table-column
-        title="角色描述"
-        data-index="description"
-        align="center"
-      />
-      <a-table-column
-        title="创建时间"
-        data-index="createTime"
+        title="采集值类型"
+        data-index="valueType"
         align="center"
       >
-        <template #cell="{ record }">
-          {{ formartDate(record.createTime) }}
+        <template #cell>
+          <span font-bold text="![rgb(var(--primary-6))]">数值型</span>
         </template>
       </a-table-column>
       <a-table-column
-        title="修改时间"
-        data-index="updateTime"
+        title="单位"
+        data-index="paramUnit"
         align="center"
       >
         <template #cell="{ record }">
-          {{ formartDate(record.updateTime) }}
+          <a-input v-model="record.paramUnit" />
         </template>
       </a-table-column>
       <a-table-column
-        title="操作"
-        data-index="operations"
+        title="是否告警"
+        data-index="isAlarm"
         align="center"
       >
         <template #cell="{ record }">
-          <a-button type="text" size="small" font-bold>
-            编辑
-          </a-button>
-          <a-button type="text" size="small" font-bold>
-            删除
-          </a-button>
+          <a-select v-model="record.isAlarm" @change="() => { record.maxValue = undefined; record.minValue = undefined; }">
+            <a-option value="true" label="是" />
+            <a-option value="false" label="否" />
+          </a-select>
+        </template>
+      </a-table-column>
+      <a-table-column
+        title="最大值"
+        data-index="maxValue"
+        align="center"
+      >
+        <template #cell="{ record }">
+          <a-input-number v-model="record.maxValue" :disabled="!record.isAlarm" />
+        </template>
+      </a-table-column>
+      <a-table-column
+        title="最小值"
+        data-index="minValue"
+        align="center"
+      >
+        <template #cell="{ record }">
+          <a-input-number v-model="record.minValue" :disabled="!record.isAlarm" />
+        </template>
+      </a-table-column>
+      <a-table-column
+        title="是否传给MES"
+        data-index="toMes"
+        align="center"
+      >
+        <template #cell="{ record }">
+          <a-select v-model="record.toMes">
+            <a-option value="true" label="是" />
+            <a-option value="false" label="否" />
+          </a-select>
         </template>
       </a-table-column>
     </template>

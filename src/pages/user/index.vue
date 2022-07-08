@@ -135,7 +135,7 @@ function deleteUser({ id, name = '' }: User) {
         :loading="loading"
         :data="tabledata"
         :bordered="false"
-        :pagination="tabledata.length > pagination.pageSize ? pagination : false"
+        :pagination="pagination.total! > pagination.pageSize ? pagination : false"
         @page-change="onPageChange"
       >
         <template #columns>
