@@ -19,7 +19,7 @@ function changeTabIdx(key: any) {
       </a-col>
     </a-row>
 
-    <a-row class="wrapper">
+    <a-row min-h-250px bg="[var(--color-bg-2)]" rounded-sm p="t-20px r-0 b-0 l-20px">
       <a-col :span="24">
         <a-tabs :active-key="activeTabIdx" type="rounded" @change="changeTabIdx">
           <a-tab-pane :key="1">
@@ -40,16 +40,3 @@ function changeTabIdx(key: any) {
   </div>
 </template>
 
-<style scoped>
-  .wrapper {
-    padding: 20px 0 0 20px;
-    min-height: 250px;
-    background-color: var(--color-bg-2);
-    border-radius: 4px;
-  }
-  :deep(.section-title) {
-    margin-top: 0;
-    margin-bottom: 16px;
-    font-size: 14px;
-  }
-</style>

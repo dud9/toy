@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import { baseSettings } from '~/settings'
+import { baseSettings, equipIp } from '~/settings'
 import { cacheAppSettings, replacePrimaryColor, updateFromStorage } from '~/utils'
 
 export const useAppStore = defineStore(
@@ -46,6 +46,7 @@ export const useAppStore = defineStore(
     }
 
     return {
+      equipIp,
       menuShape,
       menuInverted,
       showTheLogo,
