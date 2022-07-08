@@ -53,4 +53,4 @@ export const themeMode: 'dark' | 'light' | 'auto' = 'auto'
 /**
  * the ip of equip
  */
-export const equipIp = ''
+export const equipIp = '127.0.0.1'
