@@ -19,7 +19,7 @@ watch(fixHeader, () => {
     <a-button
       fixed shadow-md text-lg
       flex justify-center items-center
-      class="bottom-23% right-3%"
+      class="bottom-23% lt-lg:!bottom-18% right-3%"
       size="large" shape="circle"
     >
       <icon-to-top />
