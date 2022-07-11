@@ -99,7 +99,8 @@ function renderChart() {
       },
     ],
   }
-  reactChart = echarts.init(refChart.value) as EChart
+  if (!reactChart)
+    reactChart = echarts.init(refChart.value) as EChart
   reactChart.setOption(chartOption)
 }
 
