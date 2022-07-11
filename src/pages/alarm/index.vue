@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IconArrowRise } from '@arco-design/web-vue/es/icon'
 import AlarmSearchForm from './components/AlarmSearchForm.vue'
-import type { Pagination, SelectOptionData } from '~/types'
+import type { Pagination } from '~/types'
 
 const { loading, setLoading } = useLoading()
 let tabledata = $ref([])
@@ -13,22 +13,30 @@ const pagination = reactive({
   ...basePagination,
 })
 
-let alarmLevelOptions = $ref<SelectOptionData[]>()
-function fetchAlarmLevelOptions() {
-  const { code, data } = AlarmApi.fetchAlarmLevelOptions()
-  if (code === 0)
-    alarmLevelOptions = data
-}
-fetchAlarmLevelOptions()
+const itemTypeOptions = [
+  { value: 'collect', label: '数值型' },
+  { value: 'status', label: '状态型' },
+]
 
-function fetchAlarmData(params: Record<string, any>) {
+let alarmCnt = $ref({
+  total: 0,
+  number: 0,
+  status: 0,
+})
+async function fetchAlarmCnt() {
+  const { data } = await AlarmApi.fetchAlarmCnt() as any
+  alarmCnt = data
+}
+fetchAlarmCnt()
+
+async function fetchAlarmData(params: Record<string, any>) {
   params = { ...basePagination, ...params }
   setLoading(true)
   try {
-    const { data } = AlarmApi.fetchAlarmList()
-    tabledata = data as any
+    const { data: { records, total } } = await AlarmApi.fetchAlarmList(params) as any
+    tabledata = records as any
     pagination.current = params.current
-    pagination.total = data.length
+    pagination.total = total
   }
   catch (err) {
     // you can report use errorHandler or other
@@ -67,9 +75,9 @@ function formatRowIndex(idx: number) {
           <div flex items-center>
             查询告警
           </div>
-          <div flex items-center font-bold lt-md:hidden>
+          <div flex items-center font-bold>
             <span mr-4 op-80>告警总计</span>
-            <a-statistic :value="1000" :precision="0" :value-from="0" :start="true" animation :value-style="{ color: '#0fbf60' }">
+            <a-statistic :value="alarmCnt.total" :precision="0" :value-from="0" :start="true" animation :value-style="{ color: '#0fbf60' }">
               <template #prefix>
                 <IconArrowRise />
               </template>
@@ -78,9 +86,9 @@ function formatRowIndex(idx: number) {
               </template>
             </a-statistic>
           </div>
-          <div flex items-center font-bold lt-sm:hidden>
-            <span mr-4 op-80>轻微告警</span>
-            <a-statistic :value="453" :precision="0" :value-from="0" :start="true" animation :value-style="{ color: '#f59e0b' }">
+          <div flex items-center font-bold lt-md:hidden>
+            <span mr-4 op-80>数值型告警</span>
+            <a-statistic :value="alarmCnt.number" :precision="0" :value-from="0" :start="true" animation :value-style="{ color: '#f59e0b' }">
               <template #prefix>
                 <IconArrowRise />
               </template>
@@ -89,9 +97,9 @@ function formatRowIndex(idx: number) {
               </template>
             </a-statistic>
           </div>
-          <div flex items-center font-bold lt-sm:hidden>
-            <span mr-4 op-80>严重告警</span>
-            <a-statistic :value="547" :precision="0" :value-from="0" :start="true" animation :value-style="{ color: '#e11d48' }">
+          <div flex items-center font-bold lt-md:hidden>
+            <span mr-4 op-80>状态型告警</span>
+            <a-statistic :value="alarmCnt.status" :precision="0" :value-from="0" :start="true" animation :value-style="{ color: '#e11d48' }">
               <template #prefix>
                 <IconArrowRise />
               </template>
@@ -102,7 +110,7 @@ function formatRowIndex(idx: number) {
           </div>
         </div>
       </template>
-      <AlarmSearchForm ref="refSearchForm" :alarm-level-options="alarmLevelOptions" @fetchData="fetchAlarmData" />
+      <AlarmSearchForm ref="refSearchForm" :item-type-options="itemTypeOptions" @fetchData="fetchAlarmData" />
       <a-table
         row-key="id"
         :loading="loading"
@@ -123,31 +131,36 @@ function formatRowIndex(idx: number) {
           </a-table-column>
           <a-table-column
             title="设备名称"
-            data-index="equipName"
+            data-index="devName"
             align="center"
           />
           <a-table-column
-            title="告警等级"
-            data-index="alarmLevel"
+            title="数据类型"
+            data-index="itemType"
             align="center"
           >
             <template #cell="{ record }">
-              <span v-if="record.alarmLevel === 1" font-bold text-yellow-500> 轻微告警 </span>
-              <span v-else font-bold text-red-500> 严重告警</span>
+              <span v-if="record.itemType === 'collect'" font-bold text-yellow-500> 数值型告警 </span>
+              <span v-else font-bold text-red-500> 状态型告警</span>
             </template>
           </a-table-column>
           <a-table-column
+            title="采集项名称"
+            data-index="paramName"
+            align="center"
+          />
+          <a-table-column
             title="告警内容"
-            data-index="alarmContent"
+            data-index="content"
             align="center"
           />
           <a-table-column
             title="告警时间"
-            data-index="createTime"
+            data-index="time"
             align="center"
           >
             <template #cell="{ record }">
-              {{ formartDate(record.alarmTime) }}
+              {{ formartDate(record.time) }}
             </template>
           </a-table-column>
         </template>

@@ -3,24 +3,37 @@ import { IconRefresh, IconSearch } from '@arco-design/web-vue/es/icon'
 import type { SelectOptionData } from '~/types'
 
 const {
-  alarmLevelOptions = [],
+  itemTypeOptions = [],
 } = defineProps<{
-  alarmLevelOptions: SelectOptionData[]
+  itemTypeOptions: SelectOptionData[]
 }>()
 const emit = defineEmits(['fetchData'])
 function generateFormModel() {
   return {
-    alarmLevel: '',
+    itemType: '',
     alarmTime: [],
   }
 }
 const formModel = ref(generateFormModel())
 function search() {
-  emit('fetchData', formModel.value)
+  const clone = JSON.parse(JSON.stringify(formModel.value))
+  const { alarmTime, itemType } = clone
+  let params: Record<string, any> = {
+    itemType,
+  }
+  if (alarmTime?.length > 0) {
+    const [start, stop] = alarmTime.map((i: string) => i.trim())
+    params = {
+      ...params,
+      start: `${start} 00:00:00`,
+      stop: `${stop} 23:59:59`,
+    }
+  }
+  emit('fetchData', params)
 }
 search()
 function reset() {
-  formModel.value = ref(generateFormModel()) as any
+  formModel.value = generateFormModel() as any
 }
 
 const hideLabel = isLabelHidden
@@ -41,11 +54,11 @@ defineExpose({
       >
         <a-row :gutter="16">
           <a-col :xs="12" :lg="8">
-            <a-form-item field="alarmLevel" label="告警等级" :hide-label="hideLabel">
+            <a-form-item field="itemType" label="数据类型" :hide-label="hideLabel">
               <a-select
-                v-model="formModel.alarmLevel"
-                :options="alarmLevelOptions"
-                placeholder="请选择告警等级"
+                v-model="formModel.itemType"
+                :options="itemTypeOptions"
+                placeholder="请选择数据类型"
                 allow-clear
               />
             </a-form-item>
