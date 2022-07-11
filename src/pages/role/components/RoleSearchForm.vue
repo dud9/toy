@@ -2,6 +2,8 @@
 import { IconRefresh, IconSearch } from '@arco-design/web-vue/es/icon'
 
 const emit = defineEmits(['fetchData'])
+const dayjs = dayJs
+
 function generateFormModel() {
   return {
     name: '',
@@ -56,7 +58,7 @@ defineExpose({
             <a-form-item field="createTime" label="创建时间" :hide-label="hideLabel">
               <a-range-picker
                 v-model="formModel.createTime"
-                w-full
+                w-full :disabled-date="(current: any) => dayjs(current).isAfter(dayjs())"
               />
             </a-form-item>
           </a-col>
@@ -64,7 +66,7 @@ defineExpose({
             <a-form-item field="updateTime" label="修改时间" :hide-label="hideLabel">
               <a-range-picker
                 v-model="formModel.updateTime"
-                w-full
+                w-full :disabled-date="(current: any) => dayjs(current).isAfter(dayjs())"
               />
             </a-form-item>
           </a-col>
