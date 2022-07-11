@@ -114,6 +114,8 @@ const debouncedResizeChart = useDebounceFn(resizeChart, 200, { maxWait: 3000 })
 watch([width, height], debouncedResizeChart)
 
 watch(isDark, (val) => {
+  if (!showChart || !reactChart)
+    return
   reactChart.setOption<EChartsOption>({
     legend: {
       textStyle: {
