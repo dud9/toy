@@ -1,17 +1,6 @@
 type EChartsOption = echarts.EChartsOption
 
-export interface DataItem {
-  name: string
-  value: [string, number]
-}
-
-let base = +new Date(1988, 9, 3)
-const oneDay = 24 * 3600 * 1000
-const data = [[base, Math.random() * 300]]
-for (let i = 1; i < 20000; i++) {
-  const now = new Date((base += oneDay))
-  data.push([+now, Math.round((Math.random() - 0.5) * 20 + data[i - 1][1])])
-}
+export type DataItem = [Date, number][]
 
 export const defaultOption: EChartsOption = {
   title: {
@@ -24,13 +13,7 @@ export const defaultOption: EChartsOption = {
     },
   },
   toolbox: {
-    feature: {
-      dataZoom: {
-        yAxisIndex: 'none',
-      },
-      restore: {},
-      saveAsImage: {},
-    },
+    show: false,
   },
   tooltip: {
     backgroundColor: unref(isDark) ? '#232324' : '#fff',
@@ -39,19 +22,6 @@ export const defaultOption: EChartsOption = {
       color: unref(isDark) ? '#fff' : '#333',
     },
     trigger: 'axis',
-    formatter(params: any) {
-      params = params[0]
-      const date = new Date(params.name)
-      return (
-        `${date.getDate()
-        }/${
-        date.getMonth() + 1
-        }/${
-        date.getFullYear()
-        } : ${
-        params.value[1]}`
-      )
-    },
     axisPointer: {
       animation: false,
     },
@@ -73,20 +43,18 @@ export const defaultOption: EChartsOption = {
     {
       type: 'inside',
       start: 0,
-      end: 20,
+      end: 100,
     },
     {
       start: 0,
-      end: 20,
+      end: 100,
     },
   ],
   series: [
     {
-      name: 'test',
       type: 'line',
       smooth: true,
       symbol: 'none',
-      data,
     },
   ],
 }
