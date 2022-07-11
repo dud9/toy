@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { IconEmpty } from '@arco-design/web-vue/es/icon'
 import type { DataItem } from '../chart'
 import { defaultOption, generateChartData } from '../chart'
 import type { CollectItemNumber } from '~/types'
@@ -21,6 +22,10 @@ const baseSearchForm = {
 }
 const searchForm = reactive({
   ...baseSearchForm,
+})
+const showChart = computed(() => {
+  const { datePicker, itemId } = searchForm
+  return [datePicker, itemId].every(i => i && i !== '')
 })
 
 let itemOptions = $ref([])
@@ -103,7 +108,18 @@ watch(isDark, (val) => {
       </a-button>
     </div>
     <div w-full h-full flex justify-center items-center>
-      <div ref="refChart" class="!w-full !h-full" />
+      <div v-show="showChart" ref="refChart" class="!w-full !h-full" />
+      <a-empty
+        v-show="!showChart" w-full h-full
+        flex="~ col" justify-center items-center
+      >
+        <template #image>
+          <IconEmpty :size="100" />
+        </template>
+        <div text-30px font-bold>
+          请选择日期和属性
+        </div>
+      </a-empty>
     </div>
   </div>
 </template>
