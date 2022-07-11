@@ -162,7 +162,7 @@ watch(isDark, (val) => {
       <div v-show="showChart" ref="refChart" class="!w-full !h-full !min-h-300px" />
       <a-empty
         v-show="!showChart" w-full h-full
-        flex="~ col" justify-center items-center
+        flex="~ col" justify-center items-center mb-50px
       >
         <template #image>
           <IconEmpty :size="100" />
