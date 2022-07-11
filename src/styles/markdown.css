@@ -210,3 +210,7 @@ html.dark .prose pre {
   color: #d4cfbf;
   background-color: #18181C;
 }
+
+html.dark .prose thead {
+  color: #fbfbfb !important;
+}
