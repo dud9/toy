@@ -99,7 +99,7 @@ watch(isDark, (val) => {
         <a-option>Shenzhen</a-option>
         <a-option>Wuhan</a-option>
       </a-select>
-      <a-button type="primary" ml-4>
+      <a-button type="primary" ml-4 font-bold>
         重置
       </a-button>
     </div>
