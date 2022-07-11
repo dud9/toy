@@ -24,7 +24,7 @@ function search() {
 }
 search()
 function reset() {
-  formModel.value = ref(generateFormModel()) as any
+  formModel.value = generateFormModel() as any
 }
 
 const hideLabel = isLabelHidden

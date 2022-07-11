@@ -1,22 +1,14 @@
 export interface Alarm {
-  /**
-   * id
-   */
   id?: number
-  /**
-   * equipName
-   */
-  equipName?: string
-  /**
-   * alarmLevel
-   */
-  alarmLevel?: string
-  /**
-   * alarmContent
-   */
-  alarmContent?: Date
-  /**
-   * alarmTime
-   */
-  alarmTime?: Date
+  itemId?: number
+  itemType?: string
+  equipmentId?: Date
+  index?: Date
+  devName?: string
+  paramName?: string
+  paramUnit?: string
+  value?: number
+  maxValue?: number
+  minValue?: number
+  time?: Date
 }
