@@ -81,6 +81,7 @@ function reset() {
   searchForm.value = {
     ...baseSearchForm,
   }
+  chartData = []
 }
 
 let reactChart: EChart
@@ -136,8 +137,8 @@ watch(isDark, (val) => {
       <span mr-4 text="xl [rgb(var(--primary-6))]" font-bold lt-md:hidden>日期:</span>
       <a-date-picker
         v-model="searchForm.datePicker"
-        :disabled-date="(current: any) => dayjs(current).isAfter(dayjs())"
-        style="width: 20%;" mr-5
+        :disabled-date="(current: any) => dayjs(current).isAfter(dayjs().subtract(1, 'day'))"
+        :show-now-btn="false" style="width: 20%;" mr-5
       />
       <span mr-4 text="xl [rgb(var(--primary-6))]" font-bold lt-md:hidden>属性:</span>
       <a-select
