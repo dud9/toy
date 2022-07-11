@@ -1,69 +1,115 @@
 <script setup lang="ts">
 import { IconEmpty } from '@arco-design/web-vue/es/icon'
 import type { DataItem } from '../chart'
-import { defaultOption, generateChartData } from '../chart'
-import type { CollectItemNumber } from '~/types'
+import { defaultOption } from '../chart'
+import type { CollectItemNumber, Equipment } from '~/types'
 
-const {
-  wrapperWidth = 0,
-  wrapperHeight = 0,
-} = defineProps<{
-  wrapperWidth?: number
-  wrapperHeight?: number
-}>()
 type EChartsOption = echarts.EChartsOption
 type EChart = echarts.ECharts
 
+const { equipIp } = useAppStore()
+let equipment = $ref<Equipment>()
+async function getEquipmentInfo() {
+  const { data } = await EquipmentApi.fetchEquipmentByIp({ ip: equipIp }) as any
+  equipment = data
+}
+getEquipmentInfo()
+
 const refChart = ref()
 
-const baseSearchForm = {
-  datePicker: '',
-  itemId: '',
-}
-const searchForm = reactive({
-  ...baseSearchForm,
-})
-const showChart = computed(() => {
-  const { datePicker, itemId } = searchForm
-  return [datePicker, itemId].every(i => i && i !== '')
-})
-
-let itemOptions = $ref([])
+let itemOptions = $ref<Record<string, any>>([])
 async function fetchItemOptions() {
   const { data: { records } } = await CollectApi.fetchCollectNumberItems({}) as any
   itemOptions = records.map((i: CollectItemNumber) => ({ value: i.id, label: i.paramName })) || []
 }
 fetchItemOptions()
 
-const chartData = ref<DataItem[]>(generateChartData())
+const baseSearchForm = {
+  datePicker: '',
+  itemId: '',
+}
+const searchForm = ref({
+  ...baseSearchForm,
+})
+function checkSearchForm() {
+  const { datePicker, itemId } = searchForm.value
+  return [datePicker, itemId].every(i => i && i !== '')
+}
+function getSearchParams() {
+  const { datePicker, itemId } = searchForm.value
+  const start = `${datePicker} 00:00:00`
+  const stop = `${datePicker} 23:59:59`
 
-const chartOption = computed(() => {
   return {
+    start,
+    stop,
+    itemId: Number(itemId),
+    equipmentId: equipment.id,
+    itemType: 'collect',
+  }
+}
+
+const { bool: showChart, setBool } = useBoolean()
+
+let chartData = $ref<DataItem[]>([])
+async function fetchChartData() {
+  if (!equipment?.id) {
+    Message.error('设备不存在')
+    return
+  }
+  if (!checkSearchForm()) {
+    setBool(false)
+    Message.error('请选择日期和属性')
+    return
+  }
+  chartData = []
+  const { data } = await HistoryDataApi.fetchHistoryChartData({
+    ...getSearchParams(),
+  }) as any
+  if (data?.length > 0)
+    chartData = data.map((i: Record<string, any>) => ([new Date(i.timestamp), i.value]))
+
+  setBool(true)
+  useTimeoutFn(() => {
+    renderChart()
+  }, 200)
+}
+
+function reset() {
+  setBool(false)
+  searchForm.value = {
+    ...baseSearchForm,
+  }
+}
+
+let reactChart: EChart
+function renderChart() {
+  const { itemId } = searchForm.value
+  const name = itemOptions.filter((i: Record<string, any>) => i.value === itemId)[0]?.label || ''
+  const chartOption = {
     ...defaultOption,
     series: [
       {
-        name: 'Fake Data',
+        name,
         type: 'line',
         showSymbol: false,
-        data: chartData.value,
+        data: chartData,
       },
     ],
   }
-})
-
-let reactChart: EChart
-onMounted(() => {
   reactChart = echarts.init(refChart.value) as EChart
-  chartOption.value && reactChart.setOption(chartOption.value)
-})
+  reactChart.setOption(chartOption)
+}
 
 function resizeChart() {
   if (!reactChart)
     return
   reactChart?.resize()
 }
-const debouncedResizeChart = useDebounceFn(resizeChart, 500, { maxWait: 3000 })
-watch([() => wrapperWidth, () => wrapperHeight], debouncedResizeChart)
+
+const { width, height } = useWindowSize()
+const debouncedResizeChart = useDebounceFn(resizeChart, 200, { maxWait: 3000 })
+watch([width, height], debouncedResizeChart)
 
 watch(isDark, (val) => {
   reactChart.setOption<EChartsOption>({
@@ -100,15 +146,15 @@ watch(isDark, (val) => {
           :value="value"
         />
       </a-select>
-      <a-button type="primary" ml-5 font-bold>
+      <a-button type="primary" ml-5 font-bold @click="fetchChartData">
         查询
       </a-button>
-      <a-button ml-3 font-bold>
+      <a-button ml-3 font-bold @click="reset">
         重置
       </a-button>
     </div>
     <div w-full h-full flex justify-center items-center>
-      <div v-show="showChart" ref="refChart" class="!w-full !h-full" />
+      <div v-show="showChart" ref="refChart" class="!w-full !h-full !min-h-300px" />
       <a-empty
         v-show="!showChart" w-full h-full
         flex="~ col" justify-center items-center
