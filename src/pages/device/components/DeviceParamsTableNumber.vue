@@ -48,6 +48,7 @@ function checkAlarmState(data: Record<string, any>[]) {
   data.forEach((i: any) => {
     clone.push({
       ...i,
+      toMes: i.toMes ? Number(i.toMes) : null,
       isAlarm: (!!i.maxValue || !!i.minValue) ? 1 : 0,
     })
   })
@@ -160,11 +161,11 @@ defineExpose({
       >
         <template #cell="{ record }">
           <a-select
-            v-model="record.toMes"
-            placeholder="请选择是否传给MES..." allow-clear
+            v-model="record.toMes" placeholder="请选择是否传给MES..."
+            allow-clear @clear="() => record.toMes = null"
           >
-            <!-- <a-option :value="Boolean(1)" label="是" />
-            <a-option :value="0" label="否" /> -->
+            <a-option :value="1" label="是" />
+            <a-option :value="0" label="否" />
           </a-select>
         </template>
       </a-table-column>
