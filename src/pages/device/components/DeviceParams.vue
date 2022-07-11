@@ -30,9 +30,22 @@ function save() {
     refNumberTable.value.saveChanged()
   }
   else {
-    // if (!refNumberStatus.value)
-    //   return
-    // refNumberStatus.value.saveChanged()
+    if (!refNumberStatus.value)
+      return
+    refNumberStatus.value.saveChanged()
+  }
+}
+
+function reset() {
+  if (activeRadioValue.value === 'number') {
+    if (!refNumberTable.value)
+      return
+    refNumberTable.value.reset()
+  }
+  else {
+    if (!refNumberStatus.value)
+      return
+    refNumberStatus.value.reset()
   }
 }
 </script>
@@ -58,7 +71,7 @@ function save() {
           </template>
           保存
         </a-button>
-        <a-button font-bold ml-3>
+        <a-button font-bold ml-3 @click="reset">
           <template #icon>
             <IconRefresh />
           </template>

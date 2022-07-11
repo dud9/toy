@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { } from '../helper'
-import type { Pagination } from '~/types'
+import type { Equipment, Pagination } from '~/types'
+import { CollectApi } from '~/server/api/collect'
+
+const {
+  equipment = {},
+} = defineProps<{
+  equipment?: Equipment
+}>()
 
 const { loading, setLoading } = useLoading()
 let tabledata = $ref([])
@@ -11,12 +18,17 @@ const basePagination: Pagination = {
 const pagination = reactive({
   ...basePagination,
 })
-async function fetchRoleData(params: Record<string, any>) {
-  params = { ...basePagination, ...params }
+
+async function fetchCollectStatusItemData(params: Record<string, any>) {
+  if (!equipment || !equipment.id) {
+    Message.error('设备不存在')
+    return
+  }
+  params = { ...basePagination, ...params, equipmentId: equipment.id }
   setLoading(true)
   try {
-    const { data: { records, total } } = await RoleApi.fetchRoleList(params) as any
-    tabledata = records as any
+    const { data: { records, total } } = await CollectApi.fetchCollectStatusItems(params) as any
+    tabledata = checkAlarmState(records) as any
     pagination.current = params.current
     pagination.total = total
   }
@@ -29,17 +41,48 @@ async function fetchRoleData(params: Record<string, any>) {
     }, 1000)
   }
 }
-const refSearchForm = ref()
+fetchCollectStatusItemData({})
+
+function checkAlarmState(data: Record<string, any>[]) {
+  const clone: Record<string, any>[] = []
+  data.forEach((i: any) => {
+    clone.push({
+      ...i,
+      toMes: i.toMes === null ? null : Number(i.toMes),
+      isAlarm: i.alarmValue === null ? null : Number(i.alarmValue),
+    })
+  })
+  return clone
+}
+
 function onPageChange(current: number) {
-  if (!refSearchForm.value)
-    return
-  const params = refSearchForm.value.formModel
-  fetchRoleData({ ...params, ...basePagination, current })
+  fetchCollectStatusItemData({ ...basePagination, current })
 }
 function formatRowIndex(idx: number) {
   const { current, pageSize } = pagination
   return (current - 1) * pageSize + idx + 1
 }
+
+async function saveChanged() {
+  const clone = JSON.parse(JSON.stringify(unref(tabledata)))
+  const { code } = await CollectApi.saveCollectStatusItems(clone) as any
+  if (code !== 0) {
+    Message.error('保存失败')
+  }
+  else {
+    Message.success('保存成功')
+    onPageChange(pagination.current)
+  }
+}
+
+function reset() {
+  onPageChange(pagination.current)
+}
+
+defineExpose({
+  saveChanged,
+  reset,
+})
 </script>
 
 <template>
@@ -72,46 +115,34 @@ function formatRowIndex(idx: number) {
         align="center"
       >
         <template #cell>
-          <span font-bold text="![rgb(var(--primary-6))]">数值型</span>
+          <span font-bold text="![rgb(var(--primary-6))]">状态型</span>
         </template>
       </a-table-column>
       <a-table-column
-        title="单位"
-        data-index="paramUnit"
+        title="位置"
+        data-index="position"
         align="center"
-      >
-        <template #cell="{ record }">
-          <a-input v-model="record.paramUnit" />
-        </template>
-      </a-table-column>
+      />
       <a-table-column
         title="是否告警"
+        :width="150"
         data-index="isAlarm"
         align="center"
       >
         <template #cell="{ record }">
-          <a-select v-model="record.isAlarm" @change="() => { record.maxValue = undefined; record.minValue = undefined; }">
-            <a-option value="true" label="是" />
-            <a-option value="false" label="否" />
+          <a-select
+            v-model="record.isAlarm" allow-clear placeholder="请选择..."
+            @change="(value: any) => {
+              record.alarmValue = value === 1
+                ? true
+                : value === 0
+                  ? false
+                  : null
+            }"
+          >
+            <a-option :value="1" label="是" />
+            <a-option :value="0" label="否" />
           </a-select>
-        </template>
-      </a-table-column>
-      <a-table-column
-        title="最大值"
-        data-index="maxValue"
-        align="center"
-      >
-        <template #cell="{ record }">
-          <a-input-number v-model="record.maxValue" :disabled="!record.isAlarm" />
-        </template>
-      </a-table-column>
-      <a-table-column
-        title="最小值"
-        data-index="minValue"
-        align="center"
-      >
-        <template #cell="{ record }">
-          <a-input-number v-model="record.minValue" :disabled="!record.isAlarm" />
         </template>
       </a-table-column>
       <a-table-column
@@ -120,12 +151,21 @@ function formatRowIndex(idx: number) {
         align="center"
       >
         <template #cell="{ record }">
-          <a-select v-model="record.toMes">
-            <a-option value="true" label="是" />
-            <a-option value="false" label="否" />
+          <a-select
+            v-model="record.toMes" placeholder="请选择是否传给MES..."
+            allow-clear @clear="() => record.toMes = null"
+          >
+            <a-option :value="1" label="是" />
+            <a-option :value="0" label="否" />
           </a-select>
         </template>
       </a-table-column>
     </template>
   </a-table>
 </template>
+
+<style scoped>
+ :deep(.arco-input-wrapper) {
+    text-align: center !important;
+ }
+</style>

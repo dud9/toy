@@ -10,4 +10,8 @@ export class CollectApi {
   static saveCollectNumberItems(params: Record<string, any>) {
     return useRequest.post('/collectItem/updateByBatch', { body: params })
   }
+
+  static saveCollectStatusItems(params: Record<string, any>) {
+    return useRequest.post('/statusItem/updateByBatch', { body: params })
+  }
 }

@@ -48,7 +48,7 @@ function checkAlarmState(data: Record<string, any>[]) {
   data.forEach((i: any) => {
     clone.push({
       ...i,
-      toMes: i.toMes ? Number(i.toMes) : null,
+      toMes: i.toMes === null ? null : Number(i.toMes),
       isAlarm: (!!i.maxValue || !!i.minValue) ? 1 : 0,
     })
   })
@@ -75,8 +75,13 @@ async function saveChanged() {
   }
 }
 
+function reset() {
+  onPageChange(pagination.current)
+}
+
 defineExpose({
   saveChanged,
+  reset,
 })
 </script>
 
