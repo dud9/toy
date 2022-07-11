@@ -8,6 +8,8 @@ const {
   roleOptions: SelectOptionData[]
 }>()
 const emit = defineEmits(['fetchData'])
+const dayjs = dayJs
+
 function generateFormModel() {
   return {
     username: '',
@@ -83,8 +85,8 @@ defineExpose({
           <a-col :span="8">
             <a-form-item field="createTime" label="创建时间" :hide-label="hideLabel">
               <a-range-picker
-                v-model="formModel.createTime"
-                w-full allow-clear
+                v-model="formModel.createTime" w-full allow-clear
+                :disabled-date="(current: any) => dayjs(current).isAfter(dayjs())"
               />
             </a-form-item>
           </a-col>
@@ -92,6 +94,7 @@ defineExpose({
             <a-form-item field="updateTime" label="修改时间" :hide-label="hideLabel">
               <a-range-picker
                 v-model="formModel.updateTime"
+                :disabled-date="(current: any) => dayjs(current).isAfter(dayjs())"
                 w-full allow-clear
               />
             </a-form-item>
