@@ -163,8 +163,8 @@ defineExpose({
             v-model="record.toMes"
             placeholder="请选择是否传给MES..." allow-clear
           >
-            <a-option :value="1" label="是" />
-            <a-option :value="0" label="否" />
+            <!-- <a-option :value="Boolean(1)" label="是" />
+            <a-option :value="0" label="否" /> -->
           </a-select>
         </template>
       </a-table-column>
