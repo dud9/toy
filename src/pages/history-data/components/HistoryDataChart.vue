@@ -7,6 +7,7 @@ import type { CollectItemNumber, Equipment } from '~/types'
 type EChartsOption = echarts.EChartsOption
 type EChart = echarts.ECharts
 
+const dayjs = dayJs
 const { equipIp } = useAppStore()
 let equipment = $ref<Equipment>()
 async function getEquipmentInfo() {
@@ -133,7 +134,11 @@ watch(isDark, (val) => {
   <div w-full h-full of-hidden flex="~ col">
     <div my-20px flex justify-center items-center>
       <span mr-4 text="xl [rgb(var(--primary-6))]" font-bold lt-md:hidden>日期:</span>
-      <a-date-picker v-model="searchForm.datePicker" style="width: 20%;" mr-5 />
+      <a-date-picker
+        v-model="searchForm.datePicker"
+        :disabled-date="(current: any) => dayjs(current).isAfter(dayjs())"
+        style="width: 20%;" mr-5
+      />
       <span mr-4 text="xl [rgb(var(--primary-6))]" font-bold lt-md:hidden>属性:</span>
       <a-select
         v-model="searchForm.itemId"
