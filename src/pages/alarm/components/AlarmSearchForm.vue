@@ -8,6 +8,8 @@ const {
   itemTypeOptions: SelectOptionData[]
 }>()
 const emit = defineEmits(['fetchData'])
+const dayjs = dayJs
+
 function generateFormModel() {
   return {
     itemType: '',
@@ -67,7 +69,7 @@ defineExpose({
             <a-form-item field="alarmTime" label="告警时间" :hide-label="hideLabel">
               <a-range-picker
                 v-model="formModel.alarmTime"
-                w-full
+                w-full :disabled-date="(current: any) => dayjs(current).isAfter(dayjs())"
               />
             </a-form-item>
           </a-col>
