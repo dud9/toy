@@ -5,27 +5,12 @@ export interface DataItem {
   value: [string, number]
 }
 
-let now = new Date(1997, 9, 3)
+let base = +new Date(1988, 9, 3)
 const oneDay = 24 * 3600 * 1000
-let value = Math.random() * 1000
-
-export function randomData(): DataItem {
-  now = new Date(+now + oneDay)
-  value = value + Math.random() * 21 - 10
-  return {
-    name: now.toString(),
-    value: [
-      [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-      Math.round(value),
-    ],
-  }
-}
-
-export function generateChartData() {
-  const data: DataItem[] = []
-  for (let i = 0; i < 1000; i++)
-    data.push(randomData())
-  return data
+const data = [[base, Math.random() * 300]]
+for (let i = 1; i < 20000; i++) {
+  const now = new Date((base += oneDay))
+  data.push([+now, Math.round((Math.random() - 0.5) * 20 + data[i - 1][1])])
 }
 
 export const defaultOption: EChartsOption = {
@@ -36,6 +21,15 @@ export const defaultOption: EChartsOption = {
     show: true,
     textStyle: {
       color: unref(isDark) ? '#fff' : '#333',
+    },
+  },
+  toolbox: {
+    feature: {
+      dataZoom: {
+        yAxisIndex: 'none',
+      },
+      restore: {},
+      saveAsImage: {},
     },
   },
   tooltip: {
@@ -75,5 +69,24 @@ export const defaultOption: EChartsOption = {
       show: false,
     },
   },
-  series: [],
+  dataZoom: [
+    {
+      type: 'inside',
+      start: 0,
+      end: 20,
+    },
+    {
+      start: 0,
+      end: 20,
+    },
+  ],
+  series: [
+    {
+      name: 'test',
+      type: 'line',
+      smooth: true,
+      symbol: 'none',
+      data,
+    },
+  ],
 }
