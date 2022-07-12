@@ -72,7 +72,7 @@ function fetchReactChartData() {
     })
   }
   showChart = true
-  useIntervalFn(fetchReactChartData, 5000)
+  // useIntervalFn(fetchReactChartData, 5000)
 }
 
 function resizeChart() {

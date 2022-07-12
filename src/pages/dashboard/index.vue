@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import MenuItem from './components/MenuItem.vue'
+import type { Equipment } from '~/types'
 
+const REFRESH_INTERVAL = 10 * 1000
+
+const { equipIp } = useAppStore()
 const { user } = storeToRefs(useUserStore())
 const permissionStore = usePermissionStore()
 const { appMenus } = storeToRefs(permissionStore)
@@ -9,7 +13,31 @@ function queryMenus() {
     permissionStore.fetchAppMenus(unref(user)?.roleId)
 }
 queryMenus()
-const equipName = '数控拼焊'
+
+let equipment = $ref<Equipment>()
+let equipOnlineState = $ref(false)
+let edgeOnlineState = $ref(false)
+const equipName = computed(() => {
+  return equipment?.name || ''
+})
+
+async function fetchEquipmentStatusByIp() {
+  const { code, data, message } = await EquipmentApi.fetchEquipmentOnlineState({
+    ip: equipIp,
+  }) as any
+  if (code !== 0) {
+    Message.error(message)
+    return
+  }
+  equipment = data.equipment
+  equipOnlineState = data.equipOnlineState || false
+  edgeOnlineState = data.edgeOnlineState || false
+}
+fetchEquipmentStatusByIp()
+
+useIntervalFn(() => {
+  fetchEquipmentStatusByIp()
+}, REFRESH_INTERVAL)
 </script>
 
 <template>
@@ -29,10 +57,10 @@ const equipName = '数控拼焊'
         {{ equipName }}
       </div>
       <div h-full flex justify-center items-center op-75>
-        设备: <span ml-2 text-green-500 animate-pulse> 在线 </span>
+        设备: <span ml-2 text-green-500 animate-pulse> {{ equipOnlineState ? '在线' : '离线' }} </span>
       </div>
       <div h-full flex justify-center items-center op-75>
-        边缘端: <span ml-2 text-red-500 animate-pulse> 离线 </span>
+        边缘端: <span ml-2 text-red-500 animate-pulse> {{ edgeOnlineState ? '在线' : '离线' }} </span>
       </div>
     </div>
     <div

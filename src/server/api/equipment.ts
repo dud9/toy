@@ -1,6 +1,6 @@
 export class EquipmentApi {
-  static fetchEquipmentOnlineState() {
-
+  static fetchEquipmentOnlineState(params: Record<string, string>) {
+    return useRequest.get('/equipment/status', { urlAdd: params })
   }
 
   static fetchEquipmentByIp(params: Record<string, string>) {
