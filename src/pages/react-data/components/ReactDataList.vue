@@ -12,7 +12,7 @@ const {
 }>()
 
 // 刷新间隔
-const REFRESH_INTERVAL = 10 * 1000
+const REFRESH_INTERVAL = 60 * 1000
 
 let statusList = $ref<Record<string, any>[]>([])
 async function fetchCollectStatusItemList() {
