@@ -68,6 +68,12 @@ function validatePassword() {
     },
   }
 }
+
+let hideLabel = $ref(false)
+const { width } = useWindowSize()
+watchEffect(() => {
+  hideLabel = unref(width) < 850
+})
 </script>
 
 <template>
@@ -78,6 +84,7 @@ function validatePassword() {
         { required: true, message: '旧密码是必须的' },
       ]"
       :validate-trigger="validateTrigger"
+      :hide-label="hideLabel"
     >
       <a-input-password
         v-model="formModel.password"
@@ -91,6 +98,7 @@ function validatePassword() {
         { required: true, message: '新密码是必须的' },
       ]"
       :validate-trigger="validateTrigger"
+      :hide-label="hideLabel"
     >
       <a-input-password
         v-model="formModel.newPass"
@@ -105,6 +113,7 @@ function validatePassword() {
         { ...validatePassword() },
       ]"
       :validate-trigger="validateTrigger"
+      :hide-label="hideLabel"
     >
       <a-input-password
         v-model="formModel.checkPass"
