@@ -14,9 +14,7 @@ async function fetchCollectStatusItemList() {
   const { data: { records } } = await CollectApi.fetchCollectStatusItems({ equipmentId: equipment.id }) as any
   statusList = records
 }
-onMounted(() => {
-  fetchCollectStatusItemList()
-})
+fetchCollectStatusItemList()
 
 function checkOnlineState(key: number) {
   return (key & 1) === 1
