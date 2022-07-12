@@ -38,10 +38,10 @@ getEquipmentInfo()
         :style="{ minWidth: '50%', maxWidth: '100%', textAlign: 'center' }"
         lt-md="!w-full"
       >
-        <ReactDataChart v-if="equipment" :wrapper-width="leftSideWidth" :wrapper-height="height" :equipment="equipment" />
+        <ReactDataChart v-if="equipment" :equipment="equipment" :wrapper-width="leftSideWidth" :wrapper-height="height" />
       </a-resize-box>
       <div lt-md="mt-20px !w-full" of="x-hidden y-auto" flex-1>
-        <ReactDataList v-if="equipment" :equipment="equipment" />
+        <ReactDataList v-if="equipment" :equipment="equipment" :width="width" :wrapper-width="leftSideWidth" />
       </div>
     </div>
   </div>
