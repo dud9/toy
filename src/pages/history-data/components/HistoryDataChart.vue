@@ -74,9 +74,7 @@ async function fetchChartData() {
     chartData = data.map((i: Record<string, any>) => ([new Date(i.timestamp), i.value]))
 
   setBool(true)
-  useTimeoutFn(() => {
-    renderChart()
-  }, 200)
+  useTimeoutFn(renderChart, 200)
   useTimeoutFn(() => {
     setLoading(false)
   }, 1000)
