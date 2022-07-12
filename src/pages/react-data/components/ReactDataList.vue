@@ -11,6 +11,9 @@ const {
   wrapperWidth?: number
 }>()
 
+// 刷新间隔
+const REFRESH_INTERVAL = 10 * 1000
+
 let statusList = $ref<Record<string, any>[]>([])
 async function fetchCollectStatusItemList() {
   if (!equipment?.id)
@@ -62,7 +65,7 @@ init()
 
 useIntervalFn(() => {
   fetchItemState()
-}, 10000)
+}, REFRESH_INTERVAL)
 </script>
 
 <template>
