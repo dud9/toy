@@ -1,14 +1,18 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import ReactDataChart from './components/ReactDataChart.vue'
 import ReactDataList from './components/ReactDataList.vue'
 import type { Equipment } from '~/types'
 
 const { width, height } = useWindowSize()
-const leftSideWidth = ref(unref(width) * 0.7)
+function getLeftSideWidth(width: number | Ref<number>) {
+  return unref(width) >= 1200
+    ? unref(width) * 0.75
+    : unref(width) * 0.7
+}
+const leftSideWidth = ref(getLeftSideWidth(width))
 watch(width, (val) => {
-  leftSideWidth.value = val > 1200
-    ? val * 0.75
-    : val * 0.7
+  leftSideWidth.value = getLeftSideWidth(val)
 })
 
 const { equipIp } = useAppStore()
