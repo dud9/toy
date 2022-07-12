@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { IconEmpty } from '@arco-design/web-vue/es/icon'
+import type { Pausable } from '@vueuse/core'
 import { defaultOption } from '../chart'
 import type { CollectItemNumber, Equipment } from '~/types'
 
@@ -14,6 +15,8 @@ const {
 }>()
 type EChartsOption = echarts.EChartsOption
 type EChart = echarts.ECharts
+
+const REFRESH_INTERVAL = 10 * 1000
 
 let collectNumberOptions = $ref([])
 let itemNameMap = $ref<Record<number, string>>({})
@@ -63,6 +66,8 @@ const chartOption = computed(() => {
 
 let reactChart: EChart
 
+let timer: Pausable
+const { loading, setLoading } = useLoading()
 /**
  * type - 'query' | 'update'
  */
@@ -71,11 +76,15 @@ async function fetchReactChartData(type: 'query' | 'update') {
     if (reactChart)
       reactChart.dispose()
     showChart = false
+    if (timer)
+      timer.pause()
   }
   if (!equipment?.id)
     return
   if (selectedItemIdList.length === 0)
     return Message.warning('请选择属性')
+  if (type === 'query')
+    setLoading(true)
 
   const now = dayJs(new Date())
   const { data } = await ReactDataApi.fetchReactData({
@@ -99,13 +108,21 @@ async function fetchReactChartData(type: 'query' | 'update') {
     chartOption.value && reactChart.setOption(chartOption.value)
   }
 
-  // useIntervalFn(fetchReactChartData('update'), 5000)
+  if (type === 'query') {
+    if (!timer)
+      timer = useIntervalFn(() => fetchReactChartData('update'), REFRESH_INTERVAL)
+    else
+      timer.resume()
+    useTimeoutFn(() => setLoading(false), 1000)
+  }
 }
 
 function reset() {
   // 销毁 Echarts 实例
   if (reactChart)
     reactChart.dispose()
+  if (timer)
+    timer.pause()
   showChart = false
   selectedItemIdList = []
 }
@@ -119,6 +136,8 @@ const debouncedResizeChart = useDebounceFn(resizeChart, 500, { maxWait: 3000 })
 watch([() => wrapperWidth, () => wrapperHeight], debouncedResizeChart)
 
 watch(isDark, (val) => {
+  if (!showChart || !reactChart)
+    return
   reactChart.setOption<EChartsOption>({
     legend: {
       textStyle: {
@@ -157,19 +176,27 @@ watch(isDark, (val) => {
         重置
       </a-button>
     </div>
-    <div w-full h-full flex justify-center items-center>
-      <div v-show="showChart" ref="refChart" class="!w-full !h-full" />
-      <a-empty
-        v-show="!showChart" w-full h-full
-        flex="~ col" justify-center items-center mb-50px
-      >
-        <template #image>
-          <IconEmpty :size="100" />
-        </template>
-        <div text-30px font-bold>
-          请选择属性
-        </div>
-      </a-empty>
-    </div>
+    <a-spin :loading="loading" dot tip="正在加载中..." w-full h-full>
+      <div w-full h-full flex justify-center items-center>
+        <div v-show="showChart" ref="refChart" class="!w-full !h-full" />
+        <a-empty
+          v-show="!loading && !showChart" w-full h-full
+          flex="~ col" justify-center items-center mb-50px
+        >
+          <template #image>
+            <IconEmpty :size="100" />
+          </template>
+          <div text-30px font-bold>
+            请选择属性
+          </div>
+        </a-empty>
+      </div>
+    </a-spin>
   </div>
 </template>
+
+<style scoped>
+:deep(.arco-spin-mask) {
+  background-color: transparent !important;
+}
+</style>

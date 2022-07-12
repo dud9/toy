@@ -31,6 +31,7 @@ export const defaultOption: EChartsOption = {
     splitLine: {
       show: false,
     },
+    maxInterval: 3600 * 1000,
   },
   yAxis: {
     type: 'value',
