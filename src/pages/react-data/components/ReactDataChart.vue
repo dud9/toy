@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { IconEmpty } from '@arco-design/web-vue/es/icon'
-import type { DataItem } from '../chart'
-import { defaultOption, generateChartData, randomData } from '../chart'
+import { defaultOption } from '../chart'
 import type { CollectItemNumber, Equipment } from '~/types'
 
 const {
@@ -17,62 +16,98 @@ type EChartsOption = echarts.EChartsOption
 type EChart = echarts.ECharts
 
 let collectNumberOptions = $ref([])
+let itemNameMap = $ref<Record<number, string>>({})
 async function getCollectNumberOptions() {
   if (!equipment?.id)
     return
   const { data: { records } } = await CollectApi.fetchCollectNumberItems({ equipmentId: equipment.id })
   collectNumberOptions = records.map((i: CollectItemNumber) => ({ label: i.paramName, value: i.id })) || []
+  const nameMap: Record<number, string> = {}
+  records.forEach((i: CollectItemNumber) => {
+    nameMap[i.id!] = i.paramName!
+  })
+  itemNameMap = nameMap
 }
 getCollectNumberOptions()
 
 const refChart = ref()
 
-const chartData = ref<DataItem[]>(generateChartData())
+let showChart = $ref(false)
+let chartData = $ref<Record<number, Record<string, any>>>()
+let selectedItemIdList = $ref<number[]>([])
 
 const chartOption = computed(() => {
+  if (!selectedItemIdList || selectedItemIdList.length === 0) {
+    return {
+      ...defaultOption,
+    }
+  }
+  const series: Record<string, any>[] = []
+  selectedItemIdList.forEach((i: number) => {
+    const data = unref(chartData)[i]?.map((v: Record<string, any>) => (
+      [new Date(v.timestamp), Number(v.value.toFixed(2))]
+    )) || []
+    series.push({
+      name: itemNameMap[i] || '',
+      type: 'line',
+      showSymbol: false,
+      data,
+    })
+  })
+
   return {
     ...defaultOption,
-    series: [
-      {
-        name: 'Fake Data',
-        type: 'line',
-        showSymbol: false,
-        data: chartData.value,
-      },
-    ],
+    series,
   }
 })
 
 let reactChart: EChart
-onMounted(() => {
-  // reactChart = echarts.init(refChart.value) as EChart
-  // chartOption.value && reactChart.setOption(chartOption.value)
-  // useIntervalFn(fetchReactChartData, 5000)
-})
 
-let showChart = $ref(false)
-function fetchReactChartData() {
-  const data = chartData.value
-  for (let i = 0; i < 10; i++) {
-    data.shift()
-    data.push(randomData())
+/**
+ * type - 'query' | 'update'
+ */
+async function fetchReactChartData(type: 'query' | 'update') {
+  if (type === 'query') {
+    if (reactChart)
+      reactChart.dispose()
+    showChart = false
   }
+  if (!equipment?.id)
+    return
+  if (selectedItemIdList.length === 0)
+    return Message.warning('请选择属性')
 
-  if (!reactChart) {
-    reactChart = echarts.init(refChart.value) as EChart
-    chartOption.value && reactChart.setOption(chartOption.value)
+  const now = dayJs(new Date())
+  const { data } = await ReactDataApi.fetchReactData({
+    start: now.subtract(8, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+    stop: now.format('YYYY-MM-DD HH:mm:ss'),
+    equipmentId: equipment.id,
+    itemIdList: selectedItemIdList,
+    itemType: 'collect',
+  }) as any
+
+  chartData = data
+
+  showChart = true
+  if (type === 'query') {
+    useTimeoutFn(() => {
+      reactChart = echarts.init(refChart.value) as EChart
+      chartOption.value && reactChart.setOption(chartOption.value)
+    }, 50)
   }
   else {
-    reactChart.setOption<EChartsOption>({
-      series: [
-        {
-          data: chartData.value,
-        },
-      ],
-    })
+    chartOption.value && reactChart.setOption(chartOption.value)
   }
-  showChart = true
-  // useIntervalFn(fetchReactChartData, 5000)
+
+  // useIntervalFn(fetchReactChartData('update'), 5000)
+}
+
+function reset() {
+  // 销毁 Echarts 实例
+  if (reactChart)
+    reactChart.dispose()
+  showChart = false
+  selectedItemIdList = []
 }
 
 function resizeChart() {
@@ -106,6 +141,7 @@ watch(isDark, (val) => {
     <div my-20px flex justify-center items-center>
       <span mr-4 text="xl [rgb(var(--primary-6))]" font-bold>筛选:</span>
       <a-select
+        v-model="selectedItemIdList"
         :style="{ width: '60%' }" multiple :limit="5"
         placeholder="请选择属性..." allow-clear
       >
@@ -114,10 +150,10 @@ watch(isDark, (val) => {
           :key="idx" :label="label" :value="value"
         />
       </a-select>
-      <a-button type="primary" ml-4 font-bold @click="fetchReactChartData">
+      <a-button type="primary" ml-4 font-bold @click="fetchReactChartData('query')">
         查询
       </a-button>
-      <a-button ml-2 font-bold>
+      <a-button ml-2 font-bold @click="reset">
         重置
       </a-button>
     </div>
