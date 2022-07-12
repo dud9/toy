@@ -1,20 +1,40 @@
 <script setup lang="ts">
+import type { Equipment } from '~/types'
+
+const {
+  equipment = {},
+} = defineProps<{
+  equipment?: Equipment
+}>()
+
+let statusList = $ref<Record<string, any>[]>([])
+async function fetchCollectStatusItemList() {
+  if (!equipment?.id)
+    return
+  const { data: { records } } = await CollectApi.fetchCollectStatusItems({ equipmentId: equipment.id }) as any
+  statusList = records
+}
+onMounted(() => {
+  fetchCollectStatusItemList()
+})
+
 function checkOnlineState(key: number) {
   return (key & 1) === 1
 }
-
-const data = Array.from({ length: 20 }, (_, i) => `头座模块自检报警哈哈哈哈哈哈哈${i + 1}`)
+function getParamName(data: Record<string, any>[], idx: number) {
+  return data?.[idx]?.paramName || ''
+}
 </script>
 
 <template>
   <div w-full h-full flex="~ col" justify-start items-center pt-10px of="x-hidden y-auto" px="1/18">
     <div v-for="i, idx in 10" :key="idx" w-full flex="~ wrap" justify-center items-center mt-2 font-bold>
-      <div flex-inline items-center>
+      <div flex-inline items-center justify-start>
         <div i-carbon-data-1 mr-2 />
-        <a-tooltip v-if="data[i - 1].length > 12" :content="data[i - 1]" position="top" mini>
-          <span>{{ data[i - 1].slice(0, 12) }}... :</span>
+        <a-tooltip v-if="getParamName(statusList, i - 1).length > 12" :content="getParamName(statusList, i - 1)" position="top" mini>
+          <span>{{ getParamName(statusList, i - 1).slice(0, 12) }}... :</span>
         </a-tooltip>
-        <span v-else>{{ data[i - 1] }} :</span>
+        <span v-else>{{ getParamName(statusList, i - 1) }} :</span>
       </div>
       <div flex-inline ml-4>
         <a-tooltip content="在线" position="top" mini>

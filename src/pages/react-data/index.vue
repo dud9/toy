@@ -1,16 +1,27 @@
 <script setup lang="ts">
 import ReactDataChart from './components/ReactDataChart.vue'
 import ReactDataList from './components/ReactDataList.vue'
+import type { Equipment } from '~/types'
 
 const { width, height } = useWindowSize()
 const leftSideWidth = ref(unref(width) * 0.7)
-watch([leftSideWidth, height], (val) => {
-  // console.log(val, width.value)
-  // console.log(val)
-})
 watch(width, (val) => {
   leftSideWidth.value = val * 0.7
 })
+
+const { equipIp } = useAppStore()
+let equipment = $ref<Equipment>()
+async function getEquipmentInfo() {
+  const { code, data, message } = await EquipmentApi.fetchEquipmentByIp({ ip: equipIp }) as any
+  if (code !== 0) {
+    Message.error(message || '设备不存在')
+    return
+  }
+  equipment = {
+    ...data,
+  }
+}
+getEquipmentInfo()
 </script>
 
 <template>
@@ -27,10 +38,10 @@ watch(width, (val) => {
         :style="{ minWidth: '50%', maxWidth: '100%', textAlign: 'center' }"
         lt-md="!w-full"
       >
-        <ReactDataChart :wrapper-width="leftSideWidth" :wrapper-height="height" />
+        <ReactDataChart v-if="equipment" :wrapper-width="leftSideWidth" :wrapper-height="height" :equipment="equipment" />
       </a-resize-box>
       <div lt-md="mt-20px !w-full" of="x-hidden y-auto" flex-1>
-        <ReactDataList />
+        <ReactDataList v-if="equipment" :equipment="equipment" />
       </div>
     </div>
   </div>
