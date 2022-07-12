@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { IconEmpty } from '@arco-design/web-vue/es/icon'
 import type { DataItem } from '../chart'
 import { defaultOption, generateChartData, randomData } from '../chart'
 import type { CollectItemNumber, Equipment } from '~/types'
@@ -44,11 +45,12 @@ const chartOption = computed(() => {
 
 let reactChart: EChart
 onMounted(() => {
-  reactChart = echarts.init(refChart.value) as EChart
-  chartOption.value && reactChart.setOption(chartOption.value)
-  useIntervalFn(fetchReactChartData, 5000)
+  // reactChart = echarts.init(refChart.value) as EChart
+  // chartOption.value && reactChart.setOption(chartOption.value)
+  // useIntervalFn(fetchReactChartData, 5000)
 })
 
+let showChart = $ref(false)
 function fetchReactChartData() {
   const data = chartData.value
   for (let i = 0; i < 10; i++) {
@@ -56,13 +58,21 @@ function fetchReactChartData() {
     data.push(randomData())
   }
 
-  reactChart.setOption<EChartsOption>({
-    series: [
-      {
-        data: chartData.value,
-      },
-    ],
-  })
+  if (!reactChart) {
+    reactChart = echarts.init(refChart.value) as EChart
+    chartOption.value && reactChart.setOption(chartOption.value)
+  }
+  else {
+    reactChart.setOption<EChartsOption>({
+      series: [
+        {
+          data: chartData.value,
+        },
+      ],
+    })
+  }
+  showChart = true
+  useIntervalFn(fetchReactChartData, 5000)
 }
 
 function resizeChart() {
@@ -104,7 +114,7 @@ watch(isDark, (val) => {
           :key="idx" :label="label" :value="value"
         />
       </a-select>
-      <a-button type="primary" ml-4 font-bold>
+      <a-button type="primary" ml-4 font-bold @click="fetchReactChartData">
         查询
       </a-button>
       <a-button ml-2 font-bold>
@@ -112,7 +122,18 @@ watch(isDark, (val) => {
       </a-button>
     </div>
     <div w-full h-full flex justify-center items-center>
-      <div ref="refChart" class="!w-full !h-full" />
+      <div v-show="showChart" ref="refChart" class="!w-full !h-full" />
+      <a-empty
+        v-show="!showChart" w-full h-full
+        flex="~ col" justify-center items-center mb-50px
+      >
+        <template #image>
+          <IconEmpty :size="100" />
+        </template>
+        <div text-30px font-bold>
+          请选择属性
+        </div>
+      </a-empty>
     </div>
   </div>
 </template>

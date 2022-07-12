@@ -18,10 +18,10 @@ async function fetchCollectStatusItemList() {
   const { data: { records } } = await CollectApi.fetchCollectStatusItems({ equipmentId: equipment.id }) as any
   statusList = records
 }
-fetchCollectStatusItemList()
 
-function checkOnlineState(key: number) {
-  return (key & 1) === 1
+const stateMap = $ref<Record<number, boolean>>({})
+function checkOnlineState(data: Record<string, any>[], idx: number) {
+  return stateMap[data[idx]?.id] || false
 }
 function getParamName(data: Record<string, any>[], idx: number) {
   return data?.[idx]?.paramName || ''
@@ -34,6 +34,35 @@ watch(() => wrapperWidth, (val) => {
     : 0.84
   hidden = width >= 850 && width * factor < val
 })
+
+async function fetchItemState() {
+  if (!equipment?.id)
+    return
+  const now = dayJs(new Date())
+  const params = {
+    start: now.subtract(60, 'second').format('YYYY-MM-DD HH:mm:ss'),
+    stop: now.format('YYYY-MM-DD HH:mm:ss'),
+    equipmentId: equipment.id,
+    itemIdList: statusList.map(i => i.id) || [],
+    itemType: 'status',
+  }
+  const { data } = await ReactDataApi.fetchReactData(params) as any
+  if (data && Object.keys(data).length) {
+    Object.keys(data).forEach((key: any) => {
+      stateMap[key] = (data[key]?.slice(-1)[0]?.value ?? 0) === 1
+    })
+  }
+}
+
+async function init() {
+  await fetchCollectStatusItemList()
+  fetchItemState()
+}
+init()
+
+useIntervalFn(() => {
+  fetchItemState()
+}, 10000)
 </script>
 
 <template>
@@ -48,10 +77,10 @@ watch(() => wrapperWidth, (val) => {
       </div>
       <div flex-inline items-center justify-end>
         <a-tooltip content="在线" position="top" mini>
-          <div i-carbon-dot-mark mr-3 text="!24px green-500" :class="{ 'op-30': !checkOnlineState(i) }" />
+          <div i-carbon-dot-mark mr-3 text="!24px green-500" :class="{ 'op-30': !checkOnlineState(statusList, i - 1) }" />
         </a-tooltip>
         <a-tooltip content="离线" position="top" mini>
-          <div i-carbon-dot-mark text="!24px red-500" :class="{ 'op-30': checkOnlineState(i) }" />
+          <div i-carbon-dot-mark text="!24px red-500" :class="{ 'op-30': checkOnlineState(statusList, i - 1) }" />
         </a-tooltip>
       </div>
     </div>
