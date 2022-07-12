@@ -1,16 +1,28 @@
 <script setup lang="ts">
 import type { DataItem } from '../chart'
 import { defaultOption, generateChartData, randomData } from '../chart'
+import type { CollectItemNumber, Equipment } from '~/types'
 
 const {
+  equipment = {},
   wrapperWidth = 0,
   wrapperHeight = 0,
 } = defineProps<{
+  equipment?: Equipment
   wrapperWidth?: number
   wrapperHeight?: number
 }>()
 type EChartsOption = echarts.EChartsOption
 type EChart = echarts.ECharts
+
+let collectNumberOptions = $ref([])
+async function getCollectNumberOptions() {
+  if (!equipment?.id)
+    return
+  const { data: { records } } = await CollectApi.fetchCollectNumberItems({ equipmentId: equipment.id })
+  collectNumberOptions = records.map((i: CollectItemNumber) => ({ label: i.paramName, value: i.id })) || []
+}
+getCollectNumberOptions()
 
 const refChart = ref()
 
@@ -84,22 +96,18 @@ watch(isDark, (val) => {
     <div my-20px flex justify-center items-center>
       <span mr-4 text="xl [rgb(var(--primary-6))]" font-bold>筛选:</span>
       <a-select
-        :default-value="['Beijing', 'Shanghai']"
-        :style="{ width: '65%' }" multiple :limit="5"
+        :style="{ width: '60%' }" multiple :limit="5"
         placeholder="请选择属性..." allow-clear
       >
-        <a-option>Beijing</a-option>
-        <a-option :tag-props="{ color: 'red' }">
-          Shanghai
-        </a-option>
-        <a-option>Guangzhou</a-option>
-        <a-option disabled>
-          Disabled
-        </a-option>
-        <a-option>Shenzhen</a-option>
-        <a-option>Wuhan</a-option>
+        <a-option
+          v-for="{ label, value }, idx in collectNumberOptions"
+          :key="idx" :label="label" :value="value"
+        />
       </a-select>
       <a-button type="primary" ml-4 font-bold>
+        查询
+      </a-button>
+      <a-button ml-2 font-bold>
         重置
       </a-button>
     </div>

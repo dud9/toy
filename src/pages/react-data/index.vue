@@ -6,7 +6,9 @@ import type { Equipment } from '~/types'
 const { width, height } = useWindowSize()
 const leftSideWidth = ref(unref(width) * 0.7)
 watch(width, (val) => {
-  leftSideWidth.value = val * 0.7
+  leftSideWidth.value = val > 1200
+    ? val * 0.75
+    : val * 0.7
 })
 
 const { equipIp } = useAppStore()
