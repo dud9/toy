@@ -178,8 +178,3 @@ defineExpose({
   </a-table>
 </template>
 
-<style scoped>
- :deep(.arco-input-wrapper) {
-    text-align: center !important;
- }
-</style>
