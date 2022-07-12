@@ -51,6 +51,7 @@ function getSearchParams() {
 }
 
 const { bool: showChart, setBool } = useBoolean()
+const { loading, setLoading } = useLoading()
 
 let chartData = $ref<DataItem[]>([])
 async function fetchChartData() {
@@ -63,6 +64,8 @@ async function fetchChartData() {
     Message.error('请选择日期和属性')
     return
   }
+
+  setLoading(true)
   chartData = []
   const { data } = await HistoryDataApi.fetchHistoryChartData({
     ...getSearchParams(),
@@ -74,6 +77,9 @@ async function fetchChartData() {
   useTimeoutFn(() => {
     renderChart()
   }, 200)
+  useTimeoutFn(() => {
+    setLoading(false)
+  }, 1000)
 }
 
 function reset() {
@@ -162,19 +168,27 @@ watch(isDark, (val) => {
         重置
       </a-button>
     </div>
-    <div w-full h-full flex justify-center items-center>
-      <div v-show="showChart" ref="refChart" class="!w-full !h-full !min-h-300px" />
-      <a-empty
-        v-show="!showChart" w-full h-full
-        flex="~ col" justify-center items-center mb-50px
-      >
-        <template #image>
-          <IconEmpty :size="100" />
-        </template>
-        <div text-30px font-bold>
-          请选择日期和属性
-        </div>
-      </a-empty>
-    </div>
+    <a-spin :loading="loading" dot tip="正在加载中..." w-full h-full>
+      <div w-full h-full flex justify-center items-center>
+        <div v-show="showChart" ref="refChart" class="!w-full !h-full !min-h-300px" />
+        <a-empty
+          v-show="!loading && !showChart" w-full h-full
+          flex="~ col" justify-center items-center mb-50px
+        >
+          <template #image>
+            <IconEmpty :size="100" />
+          </template>
+          <div text-30px font-bold>
+            请选择日期和属性
+          </div>
+        </a-empty>
+      </div>
+    </a-spin>
   </div>
 </template>
+
+<style scoped>
+:deep(.arco-spin-mask) {
+  background-color: transparent !important;
+}
+</style>
