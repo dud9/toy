@@ -88,8 +88,8 @@ async function fetchReactChartData(type: 'query' | 'update') {
 
   chartData = data
 
-  showChart = true
   if (type === 'query') {
+    showChart = true
     useTimeoutFn(() => {
       reactChart = echarts.init(refChart.value) as EChart
       chartOption.value && reactChart.setOption(chartOption.value)
