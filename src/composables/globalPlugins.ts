@@ -6,7 +6,5 @@
 import dayJs from 'dayjs'
 import * as echarts from 'echarts'
 
-export {
-  dayJs,
-  echarts,
-}
+export { dayJs }
+export { echarts }
