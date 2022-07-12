@@ -18,7 +18,7 @@ specifiers:
   critters: ^0.0.16
   dayjs: ^1.11.3
   echarts: ^5.3.3
-  eslint: ^8.17.0
+  eslint: ^8.19.0
   markdown-it-link-attributes: ^4.0.0
   markdown-it-prism: ^2.2.4
   nprogress: ^0.2.0
