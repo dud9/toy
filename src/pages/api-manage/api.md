@@ -5,7 +5,7 @@ title: 接口管理
 <div class="mt-1/12 text-center">
   <!-- You can use Vue components inside markdown -->
   <div i-carbon-dicom-overlay class="text-4xl -mb-6 m-auto" />
-  <h3>关于本项目API接口</h3>
+  <h2 font-bold>关于本项目API接口</h2>
 </div>
 
 # 接口
