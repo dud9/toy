@@ -106,6 +106,7 @@ defineExpose({
       </a-table-column>
       <a-table-column
         title="采集项名称"
+        :width="250"
         data-index="paramName"
         align="center"
       />
@@ -152,7 +153,7 @@ defineExpose({
       >
         <template #cell="{ record }">
           <a-select
-            v-model="record.toMes" placeholder="请选择是否传给MES..."
+            v-model="record.toMes" placeholder="请选择..."
             allow-clear @clear="() => record.toMes = null"
           >
             <a-option :value="1" label="是" />
