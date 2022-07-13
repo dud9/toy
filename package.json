@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.1",
-    "@arco-design/web-vue": "^2.29.1",
+    "@arco-design/web-vue": "^2.33.0",
     "@iconify/json": "^2.1.64",
     "@types/markdown-it-link-attributes": "^3.0.1",
     "@types/node": "^17.0.41",

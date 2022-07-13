@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@antfu/eslint-config': ^0.25.1
-  '@arco-design/web-vue': ^2.29.1
+  '@arco-design/web-vue': ^2.33.0
   '@iconify/json': ^2.1.64
   '@types/markdown-it-link-attributes': ^3.0.1
   '@types/node': ^17.0.41
@@ -53,7 +53,7 @@ dependencies:
 
 devDependencies:
   '@antfu/eslint-config': registry.npmmirror.com/@antfu/eslint-config/0.25.2_4x5o4skxv6sl53vpwefgt23khm
-  '@arco-design/web-vue': registry.npmmirror.com/@arco-design/web-vue/2.32.1_vue@3.2.37
+  '@arco-design/web-vue': registry.npmmirror.com/@arco-design/web-vue/2.33.0_vue@3.2.37
   '@iconify/json': registry.npmmirror.com/@iconify/json/2.1.71
   '@types/markdown-it-link-attributes': registry.npmmirror.com/@types/markdown-it-link-attributes/3.0.1
   '@types/node': registry.npmmirror.com/@types/node/17.0.45
@@ -213,11 +213,11 @@ packages:
       color: registry.npmmirror.com/color/3.2.1
     dev: true
 
-  registry.npmmirror.com/@arco-design/web-vue/2.32.1_vue@3.2.37:
-    resolution: {integrity: sha512-dywxT9qNEwxMT8WdqErXI8Nv5kDZR5e1RpCFKiipU8RKx6aZMovm4JNZ3nCIQq/qrkOp+4h203quFEJ35PvomQ==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@arco-design/web-vue/-/web-vue-2.32.1.tgz}
-    id: registry.npmmirror.com/@arco-design/web-vue/2.32.1
+  registry.npmmirror.com/@arco-design/web-vue/2.33.0_vue@3.2.37:
+    resolution: {integrity: sha512-TEaiGZMZxoTX7qpuy5PEBOMvKh3yFfBpsw2Fjg65ZhZJn1aUmmeLn0ioS7EhEel2/VKBCyEHLN8D0THhMwe9vw==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@arco-design/web-vue/-/web-vue-2.33.0.tgz}
+    id: registry.npmmirror.com/@arco-design/web-vue/2.33.0
     name: '@arco-design/web-vue'
-    version: 2.32.1
+    version: 2.33.0
     peerDependencies:
       vue: ^3.1.0
     dependencies:
