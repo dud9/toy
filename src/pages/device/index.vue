@@ -32,3 +32,9 @@ function changeTabIdx(key: any) {
     </a-row>
   </div>
 </template>
+
+<style scoped>
+:deep(.arco-tabs-tab) {
+  outline-style: hidden !important;
+}
+</style>
