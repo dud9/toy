@@ -6,7 +6,8 @@ export const baseSettings = reactive<Record<string, any>>({
    */
   menuShape: 'square',
   /**
-   * whether invert the menu background
+   * whether invert the menu item background
+   * which will make the background color more visible.
    *
    * @default: false
    */
