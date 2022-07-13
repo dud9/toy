@@ -7,7 +7,7 @@ import type { Equipment } from '~/types'
 const { width, height } = useWindowSize()
 function getLeftSideWidth(width: number | Ref<number>) {
   return unref(width) >= 1200
-    ? unref(width) * 0.75
+    ? unref(width) * 0.745
     : unref(width) * 0.7
 }
 const leftSideWidth = ref(getLeftSideWidth(width))
