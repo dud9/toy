@@ -161,7 +161,7 @@ watch(isDark, (val) => {
       <span mr-4 text="xl [rgb(var(--primary-6))]" font-bold>筛选:</span>
       <a-select
         v-model="selectedItemIdList"
-        :style="{ width: '60%' }" multiple :limit="5"
+        :style="{ width: wrapperWidth < 600 ? '40%' : '60%' }" multiple :limit="5"
         placeholder="请选择属性..." allow-clear
       >
         <a-option
