@@ -25,7 +25,7 @@ const avatar = computed(() => {
 
 <template>
   <div cursor-pointer>
-    <a-dropdown trigger="click" position="bottom" @select="onSelect">
+    <a-dropdown trigger="click" @select="onSelect">
       <a-avatar :size="32" shape="square">
         <img alt="头像" :src="avatar">
       </a-avatar>
